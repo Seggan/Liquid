@@ -28,4 +28,20 @@ public final class Items {
         "&bSolidifier",
         "&7An advanced freezer"
     );
+
+    public static final SlimefunItemStack TESTLCONTAINER = new SlimefunItemStack(
+        "TESTLCONTAINER",
+        Material.HAY_BLOCK,
+        "&bTest LContainer",
+        "",
+        "&7Test Item"
+    );
+
+    public static final SlimefunItemStack TESTLCONTAINER_2 = new SlimefunItemStack(
+        "TESTLCONTAINER_2",
+        Material.HAY_BLOCK,
+        "&bTest LContainer 2",
+        "",
+        "&7Test Item"
+    );
 }
