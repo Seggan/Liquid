@@ -60,8 +60,9 @@ public class LiquidMetal extends SlimefunItem {
 
     static {
         metals.sort((o1, o2) -> ChatUtils.removeColorCodes(o1.getDisplayName()).replace(" Ingot", "")
-            .replaceAll("\\(\\d+-Carat\\)", "").compareToIgnoreCase(ChatUtils.removeColorCodes(o2.getDisplayName())
-                .replace(" Ingot", "").replaceAll("\\(\\d+-Carat\\)", "")));
+            .replaceAll("\\(\\d+-Carat\\)", "")
+            .compareToIgnoreCase(ChatUtils.removeColorCodes(o2.getDisplayName()).replace(" Ingot", "")
+                .replaceAll("\\(\\d+-Carat\\)", "")));
     }
 
     public LiquidMetal(SlimefunItemStack item) {
