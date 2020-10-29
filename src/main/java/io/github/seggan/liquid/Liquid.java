@@ -1,5 +1,7 @@
 package io.github.seggan.liquid;
 
+import io.github.seggan.liquid.machinery.Melter;
+import io.github.seggan.liquid.machinery.Solidifier;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
@@ -32,7 +34,7 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
 
         for (SlimefunItemStack metal : LiquidMetal.getMetals()) {
             SlimefunItemStack stack = new SlimefunItemStack(
-                "LIQUID_" + metal.getItemId(),
+                "LIQUID_" + metal.getItemId().replace("_INGOT", ""),
                 Material.LAVA_BUCKET,
                 "&6Liquid " + ChatUtils.removeColorCodes(metal.getDisplayName())
                     .replace(" Ingot", "")
@@ -43,8 +45,14 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
 
         new Melter(Items.category, Items.MELTER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
             SlimefunItems.HEATING_COIL, SlimefunItems.HEATING_COIL, SlimefunItems.HEATING_COIL,
-            SlimefunItems.HEATING_COIL, SlimefunItems.CRUCIBLE, SlimefunItems.HEATING_COIL,
+            SlimefunItems.HEATING_COIL, SlimefunItems.ELECTRIFIED_CRUCIBLE_3, SlimefunItems.HEATING_COIL,
             SlimefunItems.HEATING_COIL, SlimefunItems.HEATING_COIL, SlimefunItems.HEATING_COIL
+        }).register(this);
+
+        new Solidifier(Items.category, Items.SOLIDIFIER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+            SlimefunItems.COOLING_UNIT, SlimefunItems.COOLING_UNIT, SlimefunItems.COOLING_UNIT,
+            SlimefunItems.COOLING_UNIT, SlimefunItems.FREEZER_2, SlimefunItems.COOLING_UNIT,
+            SlimefunItems.COOLING_UNIT, SlimefunItems.COOLING_UNIT, SlimefunItems.COOLING_UNIT
         }).register(this);
 
         for (LiquidMetal metal : metals) {

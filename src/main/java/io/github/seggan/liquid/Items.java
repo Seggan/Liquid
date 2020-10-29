@@ -21,4 +21,11 @@ public final class Items {
         "&6Melter",
         "&7A high-temperature furnace"
     );
+
+    public static final SlimefunItemStack SOLIDIFIER = new SlimefunItemStack(
+        "SOLIDIFIER",
+        Material.LIGHT_BLUE_STAINED_GLASS,
+        "&bSolidifier",
+        "&7An advanced freezer"
+    );
 }
