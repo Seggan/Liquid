@@ -2,7 +2,6 @@ package io.github.seggan.liquid.machinery;
 
 import io.github.seggan.liquid.objects.LContainer;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.CSCoreLibPlugin.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
@@ -15,25 +14,15 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TestLContainer extends LContainer implements RecipeDisplayItem {
+public class UpgradedMelter extends LContainer implements RecipeDisplayItem {
 
-    public TestLContainer(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public UpgradedMelter(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
     }
 
     @Override
     protected void registerDefaultRecipes() {
-        registerRecipe(1, new ItemStack[] {
-                new ItemStack(Material.STONE, 4), new ItemStack(Material.DIAMOND_BLOCK), SlimefunItems.CARBON,
-                SlimefunItems.COMPRESSED_CARBON, SlimefunItems.BIG_CAPACITOR, SlimefunItems.ZINC_INGOT,
-                new CustomItem(SlimefunItems.ADVANCED_CIRCUIT_BOARD, 5), SlimefunItems.GOLD_4K,
-                new ItemStack(Material.GLASS)
-            },
-            new ItemStack[] {new ItemStack(Material.NETHERRACK), SlimefunItems.WITHER_PROOF_GLASS,
-                new ItemStack(Material.IRON_INGOT),
-                new ItemStack(Material.COAL), SlimefunItems.ELECTRIC_MOTOR, new CustomItem(SlimefunItems.AIR_RUNE, 10),
-                new ItemStack(Material.BLAZE_ROD), new ItemStack(Material.OAK_LOG), new ItemStack(Material.LAVA_BUCKET)
-            });
+        // TODO: add recipes
     }
 
     @Nonnull
@@ -62,7 +51,22 @@ public abstract class TestLContainer extends LContainer implements RecipeDisplay
     }
 
     @Override
+    public int getEnergyConsumption() {
+        return 64;
+    }
+
+    @Override
+    public int getSpeed() {
+        return 1;
+    }
+
+    @Override
     public String getMachineIdentifier() {
-        return "TESTLCONTAINER";
+        return "UPGRADED_MELTER";
+    }
+
+    @Override
+    public int getCapacity() {
+        return 128;
     }
 }

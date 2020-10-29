@@ -2,8 +2,8 @@ package io.github.seggan.liquid;
 
 import io.github.seggan.liquid.machinery.Melter;
 import io.github.seggan.liquid.machinery.Solidifier;
-import io.github.seggan.liquid.machinery.TestLContainer;
-import io.github.seggan.liquid.machinery.TestLContainer2;
+import io.github.seggan.liquid.machinery.UpgradedMelter;
+import io.github.seggan.liquid.machinery.Centrifuge;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
@@ -56,44 +56,6 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
             SlimefunItems.COOLING_UNIT, SlimefunItems.FREEZER_2, SlimefunItems.COOLING_UNIT,
             SlimefunItems.COOLING_UNIT, SlimefunItems.COOLING_UNIT, SlimefunItems.COOLING_UNIT
         }).register(this);
-
-        new TestLContainer(Items.category, Items.TESTLCONTAINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[0]) {
-
-            @Override
-            public int getEnergyConsumption() {
-                return 16;
-            }
-
-            @Override
-            public int getCapacity() {
-                return 64;
-            }
-
-            @Override
-            public int getSpeed() {
-                return 2;
-            }
-
-        }.register(this);
-
-        new TestLContainer2(Items.category, Items.TESTLCONTAINER_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[0]) {
-
-            @Override
-            public int getEnergyConsumption() {
-                return 16;
-            }
-
-            @Override
-            public int getCapacity() {
-                return 64;
-            }
-
-            @Override
-            public int getSpeed() {
-                return 2;
-            }
-
-        }.register(this);
 
         for (LiquidMetal metal : metals) {
             metal.register(this);
