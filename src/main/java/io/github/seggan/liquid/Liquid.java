@@ -34,9 +34,9 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
 
         for (SlimefunItemStack metal : LiquidMetal.getMetals()) {
             SlimefunItemStack stack = new SlimefunItemStack(
-                "LIQUID_" + metal.getItemId().replace("_INGOT", ""),
+                "MOLTEN_" + metal.getItemId().replace("_INGOT", ""),
                 Material.LAVA_BUCKET,
-                "&6Liquid " + ChatUtils.removeColorCodes(metal.getDisplayName())
+                "&6Molten " + ChatUtils.removeColorCodes(metal.getDisplayName())
                     .replace(" Ingot", "")
             );
             LiquidMetal.addLiquid(metal, stack);

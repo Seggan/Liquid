@@ -50,19 +50,26 @@ public class LiquidMetal extends SlimefunItem {
         SlimefunItems.ZINC_INGOT,
         SlimefunItems.LEAD_INGOT,
         SlimefunItems.SILVER_INGOT,
+        SlimefunItems.MAGNESIUM_INGOT,
         SlimefunItems.CARBON,
         SlimefunItems.CARBONADO,
         SlimefunItems.URANIUM,
         SlimefunItems.BOOSTED_URANIUM,
         SlimefunItems.NEPTUNIUM,
         SlimefunItems.PLUTONIUM,
-        SlimefunItems.SILICON
+        SlimefunItems.SILICON,
+        SlimefunItems.SOLDER_INGOT,
+        SlimefunItems.BILLON_INGOT,
+        SlimefunItems.FERROSILICON,
+        SlimefunItems.SULFATE
     ));
 
     static {
-        metals.sort((o1, o2) -> ChatUtils.removeColorCodes(o1.getDisplayName()).replace(" Ingot", "")
+        metals.sort((o1, o2) -> ChatUtils.removeColorCodes(o1.getDisplayName())
+            .replace(" Ingot", "")
             .replaceAll("\\(\\d+-Carat\\)", "")
-            .compareToIgnoreCase(ChatUtils.removeColorCodes(o2.getDisplayName()).replace(" Ingot", "")
+            .compareToIgnoreCase(ChatUtils.removeColorCodes(o2.getDisplayName())
+                .replace(" Ingot", "")
                 .replaceAll("\\(\\d+-Carat\\)", "")));
     }
 
