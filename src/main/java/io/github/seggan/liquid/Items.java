@@ -64,6 +64,14 @@ public final class Items {
         "&7The centrifuge can separate liquids"
     );
 
+    public static final SlimefunItemStack CRYSTALLIZER = new SlimefunItemStack(
+        "CRYSTALLIZER",
+        Material.DIAMOND_BLOCK,
+        "&bCrystallizer",
+        "",
+        "&7The crystallizer can solidify crystals"
+    );
+
     public static final SlimefunItemStack SLAG = new SlimefunItemStack(
         "SLAG",
         Material.CHARCOAL,

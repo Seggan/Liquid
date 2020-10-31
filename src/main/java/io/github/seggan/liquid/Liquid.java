@@ -1,6 +1,7 @@
 package io.github.seggan.liquid;
 
 import io.github.seggan.liquid.machinery.Centrifuge;
+import io.github.seggan.liquid.machinery.Crystallizer;
 import io.github.seggan.liquid.machinery.Melter;
 import io.github.seggan.liquid.machinery.Solidifier;
 import io.github.seggan.liquid.machinery.Mixer;
@@ -79,6 +80,12 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
             SlimefunItems.REINFORCED_ALLOY_INGOT, new ItemStack(Material.BOWL), SlimefunItems.REINFORCED_ALLOY_INGOT,
             new ItemStack(Material.BOWL), SlimefunItems.ELECTRIC_DUST_WASHER_3, new ItemStack(Material.BOWL),
             SlimefunItems.REINFORCED_ALLOY_INGOT, new ItemStack(Material.BOWL), SlimefunItems.REINFORCED_ALLOY_INGOT
+        }).register(this);
+
+        new Crystallizer(Items.category, Items.CRYSTALLIZER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+            SlimefunItems.COOLING_UNIT, new ItemStack(Material.BOWL), SlimefunItems.COOLING_UNIT,
+            new ItemStack(Material.BOWL), Items.SOLIDIFIER, new ItemStack(Material.BOWL),
+            SlimefunItems.COOLING_UNIT, new ItemStack(Material.BOWL), SlimefunItems.COOLING_UNIT
         }).register(this);
 
         new SlimefunItem(Items.category, Items.SLAG, Solidifier.RECIPE_TYPE, new ItemStack[]{
