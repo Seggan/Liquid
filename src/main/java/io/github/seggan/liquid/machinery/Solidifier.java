@@ -1,6 +1,8 @@
 package io.github.seggan.liquid.machinery;
 
 import com.google.common.collect.BiMap;
+import io.github.seggan.liquid.Items;
+import io.github.seggan.liquid.Liquid;
 import io.github.seggan.liquid.LiquidMetal;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -8,9 +10,15 @@ import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 
 public class Solidifier extends AContainer implements RecipeDisplayItem {
+
+    public static final RecipeType RECIPE_TYPE = new RecipeType(
+        new NamespacedKey(Liquid.getInstance(), "solidifier"),
+        Items.SOLIDIFIER
+    );
 
     public Solidifier(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);

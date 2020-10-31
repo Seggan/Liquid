@@ -9,6 +9,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.cscorelib2.inventory.ItemUtils;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.config.Config;
 import me.mrCookieSlime.Slimefun.cscorelib2.updater.GitHubBuildsUpdater;
@@ -46,6 +47,16 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
             metals.add(new LiquidMetal(stack));
         }
 
+        for (ItemStack crystal : LiquidMetal.getCrystals()) {
+            SlimefunItemStack stack = new SlimefunItemStack(
+                "MOLTEN_" + Util.getID(crystal),
+                Material.LAVA_BUCKET,
+                "&6Molten " + ChatUtils.removeColorCodes(ItemUtils.getItemName(crystal))
+            );
+            LiquidMetal.addCrystal(crystal, stack);
+            metals.add(new LiquidMetal(stack));
+        }
+
         new Melter(Items.category, Items.MELTER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
             SlimefunItems.HEATING_COIL, SlimefunItems.HEATING_COIL, SlimefunItems.HEATING_COIL,
             SlimefunItems.HEATING_COIL, SlimefunItems.ELECTRIFIED_CRUCIBLE_3, SlimefunItems.HEATING_COIL,
@@ -69,6 +80,19 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
             new ItemStack(Material.BOWL), SlimefunItems.ELECTRIC_DUST_WASHER_3, new ItemStack(Material.BOWL),
             SlimefunItems.REINFORCED_ALLOY_INGOT, new ItemStack(Material.BOWL), SlimefunItems.REINFORCED_ALLOY_INGOT
         }).register(this);
+
+        new SlimefunItem(Items.category, Items.SLAG, Solidifier.RECIPE_TYPE, new ItemStack[]{
+            LiquidMetal.getLiquids().get(Items.SLAG), null, null,
+            null, null, null,
+            null, null, null,
+        }).register(this);
+
+        metals.sort((o1, o2) -> ChatUtils.removeColorCodes(ItemUtils.getItemName(o1.getItem()))
+            .replace(" Ingot", "")
+            .replaceAll("\\(\\d+-Carat\\)", "")
+            .compareToIgnoreCase(ChatUtils.removeColorCodes(ItemUtils.getItemName(o2.getItem()))
+                .replace(" Ingot", "")
+                .replaceAll("\\(\\d+-Carat\\)", "")));
 
         for (LiquidMetal metal : metals) {
             metal.register(this);

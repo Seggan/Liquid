@@ -19,7 +19,8 @@ import java.util.List;
 public class LiquidMetal extends SlimefunItem {
 
     private static final HashBiMap<ItemStack, SlimefunItemStack> MELTED_METALS = HashBiMap.create();
-    private static final List<ItemStack> metals = new ArrayList<>(Arrays.asList(
+    private static final HashBiMap<ItemStack, SlimefunItemStack> MELTED_CRYSTALS = HashBiMap.create();
+    private static final List<ItemStack> metals = Arrays.asList(
         SlimefunItems.ALUMINUM_BRASS_INGOT,
         SlimefunItems.ALUMINUM_BRONZE_INGOT,
         SlimefunItems.ALUMINUM_INGOT,
@@ -53,30 +54,28 @@ public class LiquidMetal extends SlimefunItem {
         SlimefunItems.SILVER_INGOT,
         SlimefunItems.MAGNESIUM_INGOT,
         SlimefunItems.CARBON,
-        SlimefunItems.CARBONADO,
         SlimefunItems.URANIUM,
         SlimefunItems.BOOSTED_URANIUM,
         SlimefunItems.NEPTUNIUM,
         SlimefunItems.PLUTONIUM,
         SlimefunItems.SILICON,
+        SlimefunItems.FERROSILICON,
         SlimefunItems.SOLDER_INGOT,
         SlimefunItems.BILLON_INGOT,
-        SlimefunItems.FERROSILICON,
         SlimefunItems.SULFATE,
         Items.SLAG,
         VanillaItems.IRON_INGOT,
         VanillaItems.GOLD_INGOT,
         VanillaItems.REDSTONE
-    ));
+    );
+    private static final List<ItemStack> crystals = Arrays.asList(
+        VanillaItems.LAPIS,
+        VanillaItems.DIAMOND,
+        VanillaItems.EMERALD,
+        SlimefunItems.CARBONADO
+    );
 
-    static {
-        metals.sort((o1, o2) -> ChatUtils.removeColorCodes(ItemUtils.getItemName(o1))
-            .replace(" Ingot", "")
-            .replaceAll("\\(\\d+-Carat\\)", "")
-            .compareToIgnoreCase(ChatUtils.removeColorCodes(ItemUtils.getItemName(o2))
-                .replace(" Ingot", "")
-                .replaceAll("\\(\\d+-Carat\\)", "")));
-    }
+    static {}
 
     public LiquidMetal(SlimefunItemStack item) {
         super(Items.category, item, Melter.RECIPE_TYPE, new ItemStack[]{
@@ -96,8 +95,20 @@ public class LiquidMetal extends SlimefunItem {
         MELTED_METALS.put(metal, liquid);
     }
 
+    public static void addCrystal(ItemStack crystal, SlimefunItemStack liquid) {
+        MELTED_CRYSTALS.put(crystal, liquid);
+    }
+
     public static BiMap<ItemStack, SlimefunItemStack> getLiquids() {
         return MELTED_METALS;
+    }
+
+    public static BiMap<ItemStack, SlimefunItemStack> getLiquidCrystals() {
+        return MELTED_CRYSTALS;
+    }
+
+    public static List<ItemStack> getCrystals() {
+        return crystals;
     }
 
     public static BiMap<SlimefunItemStack, ItemStack> getInversed() {
