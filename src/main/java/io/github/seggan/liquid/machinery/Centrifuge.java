@@ -2,7 +2,6 @@ package io.github.seggan.liquid.machinery;
 
 import io.github.seggan.liquid.objects.LContainer;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.CSCoreLibPlugin.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
@@ -15,23 +14,15 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TestLContainer2 extends LContainer implements RecipeDisplayItem {
+public class Centrifuge extends LContainer implements RecipeDisplayItem {
 
-    public TestLContainer2(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public Centrifuge(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
     }
 
     @Override
     protected void registerDefaultRecipes() {
-        registerRecipe(1, new ItemStack[] {
-                new ItemStack(Material.NETHERRACK), SlimefunItems.WITHER_PROOF_GLASS
-            },
-            new ItemStack[] {
-                new ItemStack(Material.STONE, 4), new ItemStack(Material.DIAMOND_BLOCK), SlimefunItems.CARBON,
-                SlimefunItems.COMPRESSED_CARBON, SlimefunItems.BIG_CAPACITOR, SlimefunItems.ZINC_INGOT,
-                new CustomItem(SlimefunItems.ADVANCED_CIRCUIT_BOARD, 5), SlimefunItems.GOLD_4K,
-                new ItemStack(Material.GLASS)
-            });
+        // TODO: add recipes
     }
 
     @Nonnull
@@ -56,11 +47,26 @@ public abstract class TestLContainer2 extends LContainer implements RecipeDispla
 
     @Override
     public ItemStack getProgressBar() {
-        return new ItemStack(Material.FLINT_AND_STEEL);
+        return new ItemStack(Material.SUNFLOWER);
+    }
+
+    @Override
+    public int getEnergyConsumption() {
+        return 32;
+    }
+
+    @Override
+    public int getSpeed() {
+        return 1;
     }
 
     @Override
     public String getMachineIdentifier() {
-        return "TESTLCONTAINER_2";
+        return "CENTRIFUGE";
+    }
+
+    @Override
+    public int getCapacity() {
+        return 64;
     }
 }

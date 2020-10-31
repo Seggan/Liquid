@@ -2,11 +2,11 @@ package io.github.seggan.liquid;
 
 import io.github.seggan.liquid.machinery.Melter;
 import io.github.seggan.liquid.machinery.Solidifier;
-import io.github.seggan.liquid.machinery.TestLContainer;
-import io.github.seggan.liquid.machinery.TestLContainer2;
+import io.github.seggan.liquid.machinery.Mixer;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
+import me.mrCookieSlime.CSCoreLibPlugin.cscorelib2.inventory.ItemUtils;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.config.Config;
@@ -34,11 +34,11 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
 
         List<LiquidMetal> metals = new ArrayList<>();
 
-        for (SlimefunItemStack metal : LiquidMetal.getMetals()) {
+        for (ItemStack metal : LiquidMetal.getMetals()) {
             SlimefunItemStack stack = new SlimefunItemStack(
-                "LIQUID_" + metal.getItemId().replace("_INGOT", ""),
+                "MOLTEN_" + Util.getID(metal).replace("_INGOT", ""),
                 Material.LAVA_BUCKET,
-                "&6Liquid " + ChatUtils.removeColorCodes(metal.getDisplayName())
+                "&6Molten " + ChatUtils.removeColorCodes(ItemUtils.getItemName(metal))
                     .replace(" Ingot", "")
             );
             LiquidMetal.addLiquid(metal, stack);
@@ -57,47 +57,17 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
             SlimefunItems.COOLING_UNIT, SlimefunItems.COOLING_UNIT, SlimefunItems.COOLING_UNIT
         }).register(this);
 
-        new TestLContainer(Items.category, Items.TESTLCONTAINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[0]) {
-
-            @Override
-            public int getEnergyConsumption() {
-                return 16;
-            }
-
-            @Override
-            public int getCapacity() {
-                return 64;
-            }
-
-            @Override
-            public int getSpeed() {
-                return 2;
-            }
-
-        }.register(this);
-
-        new TestLContainer2(Items.category, Items.TESTLCONTAINER_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[0]) {
-
-            @Override
-            public int getEnergyConsumption() {
-                return 16;
-            }
-
-            @Override
-            public int getCapacity() {
-                return 64;
-            }
-
-            @Override
-            public int getSpeed() {
-                return 2;
-            }
-
-        }.register(this);
+        new Mixer(Items.category, Items.MIXER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+            SlimefunItems.CARBONADO, SlimefunItems.HEATING_COIL, SlimefunItems.CARBONADO,
+            SlimefunItems.HEATING_COIL, Items.MELTER, SlimefunItems.HEATING_COIL,
+            SlimefunItems.CARBONADO, SlimefunItems.HEATING_COIL, SlimefunItems.CARBONADO
+        }).register(this);
 
         for (LiquidMetal metal : metals) {
             metal.register(this);
         }
+
+        RecipeType.GRIND_STONE.register(new ItemStack[]{Items.SLAG}, SlimefunItems.SIFTED_ORE);
     }
 
     @Override
