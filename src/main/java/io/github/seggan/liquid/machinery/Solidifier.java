@@ -32,7 +32,7 @@ public class Solidifier extends AContainer implements RecipeDisplayItem {
             new ItemStack[]{new ItemStack(Material.OBSIDIAN), new ItemStack(Material.BUCKET)}
         );
 
-        BiMap<SlimefunItemStack, ItemStack> liquids = LiquidMetal.getInversed();
+        BiMap<SlimefunItemStack, ItemStack> liquids = LiquidMetal.getLiquids().inverse();
         for (SlimefunItemStack liquid : liquids.keySet()) {
             registerRecipe(
                 10,

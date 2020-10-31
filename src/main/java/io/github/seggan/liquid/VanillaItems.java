@@ -19,5 +19,6 @@ public final class VanillaItems {
     public static final ItemStack DIAMOND_ORE = new ItemStack(Material.DIAMOND_ORE);
     public static final ItemStack EMERALD = new ItemStack(Material.EMERALD);
     public static final ItemStack EMERALD_ORE = new ItemStack(Material.EMERALD_ORE);
-
+    public static final ItemStack NETHERITE = new ItemStack(Material.NETHERITE_INGOT);
+    public static final ItemStack NETHERITE_ORE = new ItemStack(Material.ANCIENT_DEBRIS);
 }

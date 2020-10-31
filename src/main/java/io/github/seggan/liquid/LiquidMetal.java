@@ -6,13 +6,10 @@ import io.github.seggan.liquid.machinery.Melter;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -109,9 +106,5 @@ public class LiquidMetal extends SlimefunItem {
 
     public static List<ItemStack> getCrystals() {
         return crystals;
-    }
-
-    public static BiMap<SlimefunItemStack, ItemStack> getInversed() {
-        return MELTED_METALS.inverse();
     }
 }
