@@ -9,4 +9,5 @@ public final class VanillaItems {
 
     public static final ItemStack IRON_INGOT = new ItemStack(Material.IRON_INGOT);
     public static final ItemStack GOLD_INGOT = new ItemStack(Material.GOLD_INGOT);
+    public static final ItemStack REDSTONE = new ItemStack(Material.REDSTONE);
 }
