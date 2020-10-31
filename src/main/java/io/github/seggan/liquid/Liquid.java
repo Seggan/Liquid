@@ -1,5 +1,6 @@
 package io.github.seggan.liquid;
 
+import io.github.seggan.liquid.machinery.Centrifuge;
 import io.github.seggan.liquid.machinery.Melter;
 import io.github.seggan.liquid.machinery.Solidifier;
 import io.github.seggan.liquid.machinery.Mixer;
@@ -61,6 +62,12 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
             SlimefunItems.CARBONADO, SlimefunItems.HEATING_COIL, SlimefunItems.CARBONADO,
             SlimefunItems.HEATING_COIL, Items.MELTER, SlimefunItems.HEATING_COIL,
             SlimefunItems.CARBONADO, SlimefunItems.HEATING_COIL, SlimefunItems.CARBONADO
+        }).register(this);
+
+        new Centrifuge(Items.category, Items.CENTRIFUGE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+            SlimefunItems.REINFORCED_ALLOY_INGOT, new ItemStack(Material.BOWL), SlimefunItems.REINFORCED_ALLOY_INGOT,
+            new ItemStack(Material.BOWL), SlimefunItems.ELECTRIC_DUST_WASHER_3, new ItemStack(Material.BOWL),
+            SlimefunItems.REINFORCED_ALLOY_INGOT, new ItemStack(Material.BOWL), SlimefunItems.REINFORCED_ALLOY_INGOT
         }).register(this);
 
         for (LiquidMetal metal : metals) {
