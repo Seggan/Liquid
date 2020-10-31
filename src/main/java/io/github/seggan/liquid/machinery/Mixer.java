@@ -14,9 +14,9 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpgradedMelter extends LContainer implements RecipeDisplayItem {
+public class Mixer extends LContainer implements RecipeDisplayItem {
 
-    public UpgradedMelter(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public Mixer(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
     }
 

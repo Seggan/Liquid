@@ -2,11 +2,11 @@ package io.github.seggan.liquid;
 
 import io.github.seggan.liquid.machinery.Melter;
 import io.github.seggan.liquid.machinery.Solidifier;
-import io.github.seggan.liquid.machinery.UpgradedMelter;
-import io.github.seggan.liquid.machinery.Centrifuge;
+import io.github.seggan.liquid.machinery.Mixer;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
+import me.mrCookieSlime.CSCoreLibPlugin.cscorelib2.inventory.ItemUtils;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.config.Config;
@@ -34,11 +34,11 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
 
         List<LiquidMetal> metals = new ArrayList<>();
 
-        for (SlimefunItemStack metal : LiquidMetal.getMetals()) {
+        for (ItemStack metal : LiquidMetal.getMetals()) {
             SlimefunItemStack stack = new SlimefunItemStack(
-                "MOLTEN_" + metal.getItemId().replace("_INGOT", ""),
+                "MOLTEN_" + Util.getID(metal).replace("_INGOT", ""),
                 Material.LAVA_BUCKET,
-                "&6Molten " + ChatUtils.removeColorCodes(metal.getDisplayName())
+                "&6Molten " + ChatUtils.removeColorCodes(ItemUtils.getItemName(metal))
                     .replace(" Ingot", "")
             );
             LiquidMetal.addLiquid(metal, stack);
@@ -57,9 +57,17 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
             SlimefunItems.COOLING_UNIT, SlimefunItems.COOLING_UNIT, SlimefunItems.COOLING_UNIT
         }).register(this);
 
+        new Mixer(Items.category, Items.MIXER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+            SlimefunItems.CARBONADO, SlimefunItems.HEATING_COIL, SlimefunItems.CARBONADO,
+            SlimefunItems.HEATING_COIL, Items.MELTER, SlimefunItems.HEATING_COIL,
+            SlimefunItems.CARBONADO, SlimefunItems.HEATING_COIL, SlimefunItems.CARBONADO
+        }).register(this);
+
         for (LiquidMetal metal : metals) {
             metal.register(this);
         }
+
+        RecipeType.GRIND_STONE.register(new ItemStack[]{Items.SLAG}, SlimefunItems.SIFTED_ORE);
     }
 
     @Override

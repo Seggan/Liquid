@@ -32,8 +32,8 @@ public class Melter extends AContainer implements RecipeDisplayItem {
             new ItemStack[]{new ItemStack(Material.LAVA_BUCKET)}
         );
 
-        BiMap<SlimefunItemStack, SlimefunItemStack> liquids = LiquidMetal.getLiquids();
-        for (SlimefunItemStack metal : liquids.keySet()) {
+        BiMap<ItemStack, SlimefunItemStack> liquids = LiquidMetal.getLiquids();
+        for (ItemStack metal : liquids.keySet()) {
             registerRecipe(
                 3,
                 new ItemStack[]{metal, new ItemStack(Material.BUCKET)},

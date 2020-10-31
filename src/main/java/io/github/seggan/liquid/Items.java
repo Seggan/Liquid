@@ -19,6 +19,7 @@ public final class Items {
         "MELTER",
         Material.BLAST_FURNACE,
         "&6Melter",
+        "",
         "&7A high-temperature furnace"
     );
 
@@ -26,6 +27,7 @@ public final class Items {
         "SOLIDIFIER",
         Material.LIGHT_BLUE_STAINED_GLASS,
         "&bSolidifier",
+        "",
         "&7An advanced freezer"
     );
 
@@ -43,5 +45,32 @@ public final class Items {
         "&bTest LContainer 2",
         "",
         "&7Test Item"
+    );
+
+    public static final SlimefunItemStack MIXER = new SlimefunItemStack(
+        "MIXER",
+        Material.BLAST_FURNACE,
+        "&6Mixer",
+        "",
+        "&7This upgraded melter is perfect",
+        "&7for mixing liquids together"
+    );
+
+    public static final SlimefunItemStack CENTRIFUGE = new SlimefunItemStack(
+        "CENTRIFUGE",
+        Material.HAY_BLOCK,
+        "&6Upgraded Melter",
+        "",
+        "&7This upgraded melter is perfect",
+        "&7 for mixing liquids together"
+    );
+
+    public static final SlimefunItemStack SLAG = new SlimefunItemStack(
+        "SLAG",
+        Material.CHARCOAL,
+        "&0Slag",
+        "",
+        "&7One man's trash is another",
+        "&7man's treasure..."
     );
 }

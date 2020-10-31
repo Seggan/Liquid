@@ -9,6 +9,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -17,8 +18,8 @@ import java.util.List;
 
 public class LiquidMetal extends SlimefunItem {
 
-    private static final HashBiMap<SlimefunItemStack, SlimefunItemStack> MELTED_METALS = HashBiMap.create();
-    private static final List<SlimefunItemStack> metals = new ArrayList<>(Arrays.asList(
+    private static final HashBiMap<ItemStack, SlimefunItemStack> MELTED_METALS = HashBiMap.create();
+    private static final List<ItemStack> metals = new ArrayList<>(Arrays.asList(
         SlimefunItems.ALUMINUM_BRASS_INGOT,
         SlimefunItems.ALUMINUM_BRONZE_INGOT,
         SlimefunItems.ALUMINUM_INGOT,
@@ -61,14 +62,17 @@ public class LiquidMetal extends SlimefunItem {
         SlimefunItems.SOLDER_INGOT,
         SlimefunItems.BILLON_INGOT,
         SlimefunItems.FERROSILICON,
-        SlimefunItems.SULFATE
+        SlimefunItems.SULFATE,
+        Items.SLAG,
+        VanillaItems.IRON_INGOT,
+        VanillaItems.GOLD_INGOT
     ));
 
     static {
-        metals.sort((o1, o2) -> ChatUtils.removeColorCodes(o1.getDisplayName())
+        metals.sort((o1, o2) -> ChatUtils.removeColorCodes(ItemUtils.getItemName(o1))
             .replace(" Ingot", "")
             .replaceAll("\\(\\d+-Carat\\)", "")
-            .compareToIgnoreCase(ChatUtils.removeColorCodes(o2.getDisplayName())
+            .compareToIgnoreCase(ChatUtils.removeColorCodes(ItemUtils.getItemName(o2))
                 .replace(" Ingot", "")
                 .replaceAll("\\(\\d+-Carat\\)", "")));
     }
@@ -83,19 +87,19 @@ public class LiquidMetal extends SlimefunItem {
         addItemHandler((ItemUseHandler) PlayerRightClickEvent::cancel);
     }
 
-    public static List<SlimefunItemStack> getMetals() {
+    public static List<ItemStack> getMetals() {
         return metals;
     }
 
-    public static void addLiquid(SlimefunItemStack metal, SlimefunItemStack liquid) {
+    public static void addLiquid(ItemStack metal, SlimefunItemStack liquid) {
         MELTED_METALS.put(metal, liquid);
     }
 
-    public static BiMap<SlimefunItemStack, SlimefunItemStack> getLiquids() {
+    public static BiMap<ItemStack, SlimefunItemStack> getLiquids() {
         return MELTED_METALS;
     }
 
-    public static BiMap<SlimefunItemStack, SlimefunItemStack> getInversed() {
+    public static BiMap<SlimefunItemStack, ItemStack> getInversed() {
         return MELTED_METALS.inverse();
     }
 }
