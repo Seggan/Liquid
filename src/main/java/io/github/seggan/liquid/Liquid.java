@@ -58,6 +58,16 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
             metals.add(new LiquidMetal(stack));
         }
 
+        for (ItemStack ore : LiquidMetal.getOres()) {
+            SlimefunItemStack stack = new SlimefunItemStack(
+                "MOLTEN_" + Util.getID(ore),
+                Material.LAVA_BUCKET,
+                "&6Molten " + ChatUtils.removeColorCodes(ItemUtils.getItemName(ore))
+            );
+            LiquidMetal.addOre(ore, stack);
+            metals.add(new LiquidMetal(stack));
+        }
+
         new Melter(Items.category, Items.MELTER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
             SlimefunItems.HEATING_COIL, SlimefunItems.HEATING_COIL, SlimefunItems.HEATING_COIL,
             SlimefunItems.HEATING_COIL, SlimefunItems.ELECTRIFIED_CRUCIBLE_3, SlimefunItems.HEATING_COIL,

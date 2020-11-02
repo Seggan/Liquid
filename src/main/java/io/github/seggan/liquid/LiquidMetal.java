@@ -6,13 +6,10 @@ import io.github.seggan.liquid.machinery.Melter;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +17,7 @@ public class LiquidMetal extends SlimefunItem {
 
     private static final HashBiMap<ItemStack, SlimefunItemStack> MELTED_METALS = HashBiMap.create();
     private static final HashBiMap<ItemStack, SlimefunItemStack> MELTED_CRYSTALS = HashBiMap.create();
+    private static final HashBiMap<ItemStack, SlimefunItemStack> MELTED_ORES = HashBiMap.create();
     private static final List<ItemStack> metals = Arrays.asList(
         SlimefunItems.ALUMINUM_BRASS_INGOT,
         SlimefunItems.ALUMINUM_BRONZE_INGOT,
@@ -66,7 +64,8 @@ public class LiquidMetal extends SlimefunItem {
         Items.SLAG,
         VanillaItems.IRON_INGOT,
         VanillaItems.GOLD_INGOT,
-        VanillaItems.REDSTONE
+        VanillaItems.REDSTONE,
+        VanillaItems.NETHERITE
     );
     private static final List<ItemStack> crystals = Arrays.asList(
         VanillaItems.LAPIS,
@@ -75,7 +74,15 @@ public class LiquidMetal extends SlimefunItem {
         SlimefunItems.CARBONADO
     );
 
-    static {}
+    private static final List<ItemStack> ores = Arrays.asList(
+        VanillaItems.IRON_ORE,
+        VanillaItems.GOLD_ORE,
+        VanillaItems.REDSTONE_ORE,
+        VanillaItems.LAPIS_ORE,
+        VanillaItems.DIAMOND_ORE,
+        VanillaItems.EMERALD_ORE,
+        VanillaItems.NETHERITE_ORE
+    );
 
     public LiquidMetal(SlimefunItemStack item) {
         super(Items.category, item, Melter.RECIPE_TYPE, new ItemStack[]{
@@ -99,6 +106,11 @@ public class LiquidMetal extends SlimefunItem {
         MELTED_CRYSTALS.put(crystal, liquid);
     }
 
+    public static void addOre(ItemStack ore, SlimefunItemStack liquid) {
+        MELTED_ORES.put(ore, liquid);
+    }
+
+
     public static BiMap<ItemStack, SlimefunItemStack> getLiquids() {
         return MELTED_METALS;
     }
@@ -107,11 +119,16 @@ public class LiquidMetal extends SlimefunItem {
         return MELTED_CRYSTALS;
     }
 
+    public static BiMap<ItemStack, SlimefunItemStack> getLiquidOres() {
+        return MELTED_CRYSTALS;
+    }
+
     public static List<ItemStack> getCrystals() {
         return crystals;
     }
 
-    public static BiMap<SlimefunItemStack, ItemStack> getInversed() {
-        return MELTED_METALS.inverse();
+    public static List<ItemStack> getOres() {
+        return ores;
     }
+
 }

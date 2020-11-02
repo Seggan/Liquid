@@ -210,7 +210,7 @@ public class Mixer extends LContainer implements RecipeDisplayItem {
 
     @Override
     public String getMachineIdentifier() {
-        return "UPGRADED_MELTER";
+        return "MIXER";
     }
 
     @Override
