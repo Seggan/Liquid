@@ -1,5 +1,6 @@
 package io.github.seggan.liquid;
 
+import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
@@ -20,7 +21,9 @@ public final class Items {
         Material.BLAST_FURNACE,
         "&6Melter",
         "",
-        "&7A high-temperature furnace"
+        "&7A high-temperature furnace",
+        LoreBuilder.powerPerSecond(32),
+        LoreBuilder.powerBuffer(64)
     );
 
     public static final SlimefunItemStack SOLIDIFIER = new SlimefunItemStack(
@@ -28,7 +31,9 @@ public final class Items {
         Material.LIGHT_BLUE_STAINED_GLASS,
         "&bSolidifier",
         "",
-        "&7An advanced freezer"
+        "&7An advanced freezer",
+        LoreBuilder.powerPerSecond(8),
+        LoreBuilder.powerBuffer(16)
     );
 
     public static final SlimefunItemStack TESTLCONTAINER = new SlimefunItemStack(
@@ -53,7 +58,9 @@ public final class Items {
         "&6Mixer",
         "",
         "&7This upgraded melter is perfect",
-        "&7for mixing liquids together"
+        "&7for mixing liquids together",
+        LoreBuilder.powerPerSecond(64),
+        LoreBuilder.powerBuffer(128)
     );
 
     public static final SlimefunItemStack CENTRIFUGE = new SlimefunItemStack(
@@ -61,7 +68,9 @@ public final class Items {
         Material.HAY_BLOCK,
         "&6Centrifuge",
         "",
-        "&7The centrifuge can separate liquids"
+        "&7The centrifuge can separate liquids",
+        LoreBuilder.powerPerSecond(32),
+        LoreBuilder.powerBuffer(64)
     );
 
     public static final SlimefunItemStack CRYSTALLIZER = new SlimefunItemStack(
@@ -69,7 +78,9 @@ public final class Items {
         Material.DIAMOND_BLOCK,
         "&bCrystallizer",
         "",
-        "&7The crystallizer can solidify crystals"
+        "&7The crystallizer can solidify crystals",
+        LoreBuilder.powerPerSecond(8),
+        LoreBuilder.powerBuffer(16)
     );
 
     public static final SlimefunItemStack SLAG = new SlimefunItemStack(
