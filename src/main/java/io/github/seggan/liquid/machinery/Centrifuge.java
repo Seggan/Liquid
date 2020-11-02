@@ -149,13 +149,14 @@ public class Centrifuge extends LContainer implements RecipeDisplayItem {
         );
 
         // Ores
+        BiMap<ItemStack, SlimefunItemStack> ores = LiquidMetal.getLiquidOres();
         registerRecipe(
             5,
             new ItemStack[]{
-                liquids.get(VanillaItems.IRON_ORE), new ItemStack(Material.BUCKET)
+                ores.get(VanillaItems.IRON_ORE), new ItemStack(Material.BUCKET)
             },
             new ItemStack[]{
-                liquids.get(VanillaItems.IRON_INGOT), liquids.get(Items.SLAG)
+                new SlimefunItemStack(liquids.get(VanillaItems.IRON_INGOT), 3), liquids.get(Items.SLAG)
             }
         );
     }

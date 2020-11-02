@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -86,7 +87,7 @@ public class LiquidMetal extends SlimefunItem {
 
     public LiquidMetal(SlimefunItemStack item) {
         super(Items.category, item, Melter.RECIPE_TYPE, new ItemStack[]{
-            item, null, null,
+            item, new ItemStack(Material.BUCKET), null,
             null, null, null,
             null, null, null
         });
@@ -97,6 +98,15 @@ public class LiquidMetal extends SlimefunItem {
     public static List<ItemStack> getMetals() {
         return metals;
     }
+
+    public static List<ItemStack> getCrystals() {
+        return crystals;
+    }
+
+    public static List<ItemStack> getOres() {
+        return ores;
+    }
+
 
     public static void addLiquid(ItemStack metal, SlimefunItemStack liquid) {
         MELTED_METALS.put(metal, liquid);
@@ -120,15 +130,6 @@ public class LiquidMetal extends SlimefunItem {
     }
 
     public static BiMap<ItemStack, SlimefunItemStack> getLiquidOres() {
-        return MELTED_CRYSTALS;
+        return MELTED_ORES;
     }
-
-    public static List<ItemStack> getCrystals() {
-        return crystals;
-    }
-
-    public static List<ItemStack> getOres() {
-        return ores;
-    }
-
 }
