@@ -59,10 +59,17 @@ public final class Items {
     public static final SlimefunItemStack CENTRIFUGE = new SlimefunItemStack(
         "CENTRIFUGE",
         Material.HAY_BLOCK,
-        "&6Upgraded Melter",
+        "&6Centrifuge",
         "",
-        "&7This upgraded melter is perfect",
-        "&7 for mixing liquids together"
+        "&7The centrifuge can separate liquids"
+    );
+
+    public static final SlimefunItemStack CRYSTALLIZER = new SlimefunItemStack(
+        "CRYSTALLIZER",
+        Material.DIAMOND_BLOCK,
+        "&bCrystallizer",
+        "",
+        "&7The crystallizer can solidify crystals"
     );
 
     public static final SlimefunItemStack SLAG = new SlimefunItemStack(
