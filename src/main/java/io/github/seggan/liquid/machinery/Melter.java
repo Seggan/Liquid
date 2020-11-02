@@ -45,7 +45,7 @@ public class Melter extends AContainer implements RecipeDisplayItem {
             registerRecipe(
                 3,
                 new ItemStack[]{crystal, new ItemStack(Material.BUCKET)},
-                new ItemStack[]{liquids.get(crystal)}
+                new ItemStack[]{crystals.get(crystal)}
             );
         }
         BiMap<ItemStack, SlimefunItemStack> ores = LiquidMetal.getLiquidOres();
@@ -53,7 +53,7 @@ public class Melter extends AContainer implements RecipeDisplayItem {
             registerRecipe(
                 3,
                 new ItemStack[]{ore, new ItemStack(Material.BUCKET)},
-                new ItemStack[]{liquids.get(ore)}
+                new ItemStack[]{ores.get(ore)}
             );
         }
     }
