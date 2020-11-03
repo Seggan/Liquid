@@ -153,10 +153,55 @@ public class Centrifuge extends LContainer implements RecipeDisplayItem {
         registerRecipe(
             5,
             new ItemStack[]{
-                ores.get(VanillaItems.IRON_ORE), new ItemStack(Material.BUCKET)
+                ores.get(VanillaItems.IRON_ORE), new ItemStack(Material.BUCKET, 3)
             },
             new ItemStack[]{
                 new SlimefunItemStack(liquids.get(VanillaItems.IRON_INGOT), 3), liquids.get(Items.SLAG)
+            }
+        );
+        registerRecipe(
+            5,
+            new ItemStack[]{
+                ores.get(VanillaItems.GOLD_ORE), new ItemStack(Material.BUCKET, 3)
+            },
+            new ItemStack[]{
+                new SlimefunItemStack(liquids.get(VanillaItems.GOLD_INGOT), 3), liquids.get(Items.SLAG)
+            }
+        );
+        registerRecipe(
+            5,
+            new ItemStack[]{
+                ores.get(VanillaItems.LAPIS_ORE), new ItemStack(Material.BUCKET, 3)
+            },
+            new ItemStack[]{
+                new SlimefunItemStack(liquids.get(VanillaItems.LAPIS), 3), liquids.get(Items.SLAG)
+            }
+        );
+        registerRecipe(
+            5,
+            new ItemStack[]{
+                ores.get(VanillaItems.DIAMOND_ORE), new ItemStack(Material.BUCKET, 3)
+            },
+            new ItemStack[]{
+                new SlimefunItemStack(liquids.get(VanillaItems.DIAMOND), 3), liquids.get(Items.SLAG)
+            }
+        );
+        registerRecipe(
+            5,
+            new ItemStack[]{
+                ores.get(VanillaItems.EMERALD_ORE), new ItemStack(Material.BUCKET, 3)
+            },
+            new ItemStack[]{
+                new SlimefunItemStack(liquids.get(VanillaItems.EMERALD), 3), liquids.get(Items.SLAG)
+            }
+        );
+        registerRecipe(
+            5,
+            new ItemStack[]{
+                ores.get(VanillaItems.REDSTONE_ORE), new ItemStack(Material.BUCKET, 3)
+            },
+            new ItemStack[]{
+                new SlimefunItemStack(liquids.get(VanillaItems.REDSTONE), 3), liquids.get(Items.SLAG)
             }
         );
     }
