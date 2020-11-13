@@ -28,6 +28,7 @@ public class Mixer extends LContainer implements RecipeDisplayItem {
     @Override
     protected void registerDefaultRecipes() {
         BiMap<ItemStack, SlimefunItemStack> liquids = LiquidMetal.getLiquids();
+        BiMap<SlimefunItemStack, ItemStack> crystals = LiquidMetal.getLiquidCrystals().inverse();
         registerRecipe(
             3,
             new ItemStack[]{
@@ -166,6 +167,15 @@ public class Mixer extends LContainer implements RecipeDisplayItem {
             3,
             new ItemStack[]{
                 liquids.get(SlimefunItems.HARDENED_METAL_INGOT), liquids.get(VanillaItems.REDSTONE)
+            },
+            new ItemStack[]{
+                new SlimefunItemStack(liquids.get(SlimefunItems.REDSTONE_ALLOY), 2)
+            }
+        );
+        registerRecipe(
+            3,
+            new ItemStack[]{
+                liquids.get(SlimefunItems.MAGNESIUM_INGOT), crystals.get(SlimefunItems.SALT)
             },
             new ItemStack[]{
                 new SlimefunItemStack(liquids.get(SlimefunItems.REDSTONE_ALLOY), 2)

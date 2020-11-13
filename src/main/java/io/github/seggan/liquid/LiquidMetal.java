@@ -72,7 +72,8 @@ public class LiquidMetal extends SlimefunItem {
         VanillaItems.LAPIS,
         VanillaItems.DIAMOND,
         VanillaItems.EMERALD,
-        SlimefunItems.CARBONADO
+        SlimefunItems.SALT,
+        SlimefunItems.MAGNESIUM_SALT
     );
 
     private static final List<ItemStack> ores = Arrays.asList(
