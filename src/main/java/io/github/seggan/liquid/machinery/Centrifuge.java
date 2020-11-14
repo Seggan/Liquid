@@ -39,6 +39,7 @@ public class Centrifuge extends LContainer implements RecipeDisplayItem {
     @Override
     protected void registerDefaultRecipes() {
         BiMap<ItemStack, SlimefunItemStack> liquids = LiquidMetal.getLiquids();
+        BiMap<ItemStack, SlimefunItemStack> crystals = LiquidMetal.getLiquidCrystals();
         registerRecipe(
             5,
             new ItemStack[]{
@@ -174,7 +175,7 @@ public class Centrifuge extends LContainer implements RecipeDisplayItem {
                 ores.get(VanillaItems.LAPIS_ORE), new ItemStack(Material.BUCKET, 3)
             },
             new ItemStack[]{
-                new SlimefunItemStack(liquids.get(VanillaItems.LAPIS), 3), liquids.get(Items.SLAG)
+                new SlimefunItemStack(crystals.get(VanillaItems.LAPIS), 3), liquids.get(Items.SLAG)
             }
         );
         registerRecipe(
@@ -183,7 +184,7 @@ public class Centrifuge extends LContainer implements RecipeDisplayItem {
                 ores.get(VanillaItems.DIAMOND_ORE), new ItemStack(Material.BUCKET, 3)
             },
             new ItemStack[]{
-                new SlimefunItemStack(liquids.get(VanillaItems.DIAMOND), 3), liquids.get(Items.SLAG)
+                new SlimefunItemStack(crystals.get(VanillaItems.DIAMOND), 3), liquids.get(Items.SLAG)
             }
         );
         registerRecipe(
@@ -192,7 +193,7 @@ public class Centrifuge extends LContainer implements RecipeDisplayItem {
                 ores.get(VanillaItems.EMERALD_ORE), new ItemStack(Material.BUCKET, 3)
             },
             new ItemStack[]{
-                new SlimefunItemStack(liquids.get(VanillaItems.EMERALD), 3), liquids.get(Items.SLAG)
+                new SlimefunItemStack(crystals.get(VanillaItems.EMERALD), 3), liquids.get(Items.SLAG)
             }
         );
         registerRecipe(
@@ -202,6 +203,15 @@ public class Centrifuge extends LContainer implements RecipeDisplayItem {
             },
             new ItemStack[]{
                 new SlimefunItemStack(liquids.get(VanillaItems.REDSTONE), 3), liquids.get(Items.SLAG)
+            }
+        );
+        registerRecipe(
+            5,
+            new ItemStack[]{
+                ores.get(VanillaItems.NETHERITE_ORE)
+            },
+            new ItemStack[]{
+               liquids.get(VanillaItems.NETHERITE), liquids.get(Items.SLAG)
             }
         );
     }
