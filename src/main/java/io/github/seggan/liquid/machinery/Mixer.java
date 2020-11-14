@@ -175,6 +175,24 @@ public class Mixer extends LContainer implements RecipeDisplayItem {
         registerRecipe(
             3,
             new ItemStack[]{
+                liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(VanillaItems.IRON_INGOT)
+            },
+            new ItemStack[]{
+                new SlimefunItemStack(liquids.get(SlimefunItems.NICKEL_INGOT), 2)
+            }
+        );
+        registerRecipe(
+            3,
+            new ItemStack[]{
+                liquids.get(SlimefunItems.NICKEL_INGOT), liquids.get(VanillaItems.IRON_INGOT)
+            },
+            new ItemStack[]{
+                new SlimefunItemStack(liquids.get(SlimefunItems.COBALT_INGOT), 2)
+            }
+        );
+        registerRecipe(
+            3,
+            new ItemStack[]{
                 liquids.get(SlimefunItems.MAGNESIUM_INGOT), crystals.get(SlimefunItems.SALT)
             },
             new ItemStack[]{
