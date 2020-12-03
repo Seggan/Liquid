@@ -2,6 +2,7 @@ package io.github.seggan.liquid.machinery;
 
 import com.google.common.collect.BiMap;
 import io.github.seggan.liquid.Items;
+import io.github.seggan.liquid.Liquid;
 import io.github.seggan.liquid.LiquidMetal;
 import io.github.seggan.liquid.VanillaItems;
 import io.github.seggan.liquid.objects.LContainer;
@@ -13,6 +14,7 @@ import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -20,6 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mixer extends LContainer implements RecipeDisplayItem {
+
+    public static final RecipeType RECIPE_TYPE = new RecipeType(
+        new NamespacedKey(Liquid.getInstance(), "mixer"),
+        Items.MIXER
+    );
+
 
     public Mixer(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);

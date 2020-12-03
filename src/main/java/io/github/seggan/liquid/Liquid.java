@@ -1,5 +1,6 @@
 package io.github.seggan.liquid;
 
+import io.github.seggan.liquid.categories.MixerCategory;
 import io.github.seggan.liquid.machinery.Centrifuge;
 import io.github.seggan.liquid.machinery.Crystallizer;
 import io.github.seggan.liquid.machinery.Melter;
@@ -119,6 +120,8 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
         }
 
         RecipeType.GRIND_STONE.register(new ItemStack[]{Items.SLAG}, SlimefunItems.SIFTED_ORE);
+
+        MixerCategory.INSTANCE.register();
     }
 
     @Override
