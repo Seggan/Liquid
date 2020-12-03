@@ -49,7 +49,7 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
                     .replace(" Ingot", "")
             );
             LiquidMetal.addLiquid(metal, stack);
-            metals.add(new LiquidMetal(stack));
+            metals.add(new LiquidMetal(stack, metal));
         }
 
         for (ItemStack crystal : LiquidMetal.getCrystals()) {
@@ -59,7 +59,7 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
                 "&6Molten " + ChatUtils.removeColorCodes(ItemUtils.getItemName(crystal))
             );
             LiquidMetal.addCrystal(crystal, stack);
-            metals.add(new LiquidMetal(stack));
+            metals.add(new LiquidMetal(stack, crystal));
         }
 
         for (ItemStack ore : LiquidMetal.getOres()) {
@@ -69,7 +69,7 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
                 "&6Molten " + ChatUtils.removeColorCodes(ItemUtils.getItemName(ore))
             );
             LiquidMetal.addOre(ore, stack);
-            metals.add(new LiquidMetal(stack));
+            metals.add(new LiquidMetal(stack, ore));
         }
 
         new Melter(Items.category, Items.MELTER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{

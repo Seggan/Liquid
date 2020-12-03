@@ -87,9 +87,9 @@ public class LiquidMetal extends SlimefunItem {
         VanillaItems.NETHERITE_ORE
     );
 
-    public LiquidMetal(SlimefunItemStack item) {
+    public LiquidMetal(SlimefunItemStack item, ItemStack solid) {
         super(Items.category, item, Melter.RECIPE_TYPE, new ItemStack[]{
-            item, new ItemStack(Material.BUCKET), null,
+            solid, new ItemStack(Material.BUCKET), null,
             null, null, null,
             null, null, null
         });
