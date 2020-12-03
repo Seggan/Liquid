@@ -283,8 +283,7 @@ public class Centrifuge extends LContainer implements RecipeDisplayItem {
 
         for (MachineRecipe recipe : recipes) {
             displayRecipes.add(new CustomItem(
-                new ItemStack(Material.LAVA_BUCKET, recipe.getInput().length),
-                "&3Multiple Input Recipe")); // Can't exactly show all 9 items at once
+                recipe.getInput()[0], recipe.getInput()[0].getItemMeta().getDisplayName() + " and buckets (amounts vary)")); // Can't exactly show all 9 items at once
             displayRecipes.add(recipe.getOutput()[0]); // Main output should be the first item
         }
 
