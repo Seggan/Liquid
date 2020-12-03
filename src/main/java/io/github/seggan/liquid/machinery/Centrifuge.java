@@ -17,20 +17,9 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Centrifuge extends LContainer implements RecipeDisplayItem {
-
-    private static final Map<Material, SlimefunItemStack[]> byproducts = new HashMap<>();
-
-    static {
-        byproducts.put(Material.IRON_ORE, new SlimefunItemStack[]{
-            SlimefunItems.COPPER_INGOT, SlimefunItems.GOLD_4K, Items.SLAG, SlimefunItems.COBALT_INGOT,
-            SlimefunItems.NICKEL_INGOT, SlimefunItems.SULFATE
-        });
-    }
 
     public Centrifuge(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
@@ -215,66 +204,6 @@ public class Centrifuge extends LContainer implements RecipeDisplayItem {
             }
         );
     }
-
-    /*@Override
-    protected MachineRecipe findNextRecipe(BlockMenu inv) {
-        MachineRecipe recipe = super.findNextRecipe(inv);
-        if (recipe != null) {
-            return recipe;
-        }
-
-        final Map<Integer, ItemStack> inventory = new HashMap<>();
-
-        for (int slot : getInputSlots()) {
-            ItemStack item = inv.getItemInSlot(slot);
-
-            if (item != null) {
-                inventory.put(slot, new ItemStackWrapper(item));
-            }
-        }
-
-        if (!inventory.containsValue(new ItemStack(Material.BUCKET))) {
-            return null;
-        }
-
-        oreLoop: {
-            for (ItemStack stack : inventory.values()) {
-                for (ItemStack ore : LiquidMetal.getOres()) {
-                    if (SlimefunUtils.isItemSimilar(ore, stack, true)) {
-                        break oreLoop;
-                    }
-                }
-            }
-            return null;
-        }
-
-        int ore = inventory.get(0).equals(new ItemStack(Material.BUCKET)) ? 1 : 0;
-        int bucket = ore == 0 ? 1 : 0;
-
-        List<ItemStack> outputtedItems = new ArrayList<>();
-        BiMap<ItemStack, SlimefunItemStack> liquids = LiquidMetal.getLiquidOres();
-        switch (liquids.inverse().get(inventory.get(ore)).getType()) {
-            case IRON_ORE:
-                for (int n = 0; n < inventory.get(bucket).getAmount(); n++) {
-                    if (n < 3) {
-                        outputtedItems.add(liquids.get(VanillaItems.IRON_INGOT));
-                    } else {
-                        outputtedItems.add(liquids.get(getByproduct(Material.IRON_ORE)));
-                    }
-                }
-        }
-        return new MachineRecipe(3,
-            inventory.values().toArray(new ItemStack[0]),
-            outputtedItems.toArray(new ItemStack[0]));
-    }
-
-    private SlimefunItemStack getByproduct(Material ore) {
-        Random random = ThreadLocalRandom.current();
-
-        SlimefunItemStack[] possible = byproducts.get(ore);
-
-        return possible[random.nextInt(possible.length)];
-    }*/
 
     @Nonnull
     @Override
