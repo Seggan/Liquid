@@ -40,6 +40,16 @@ public class Mixer extends LContainer implements RecipeDisplayItem {
         registerRecipe(
             3,
             new ItemStack[]{
+                liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(SlimefunItems.ALUMINUM_INGOT),
+                liquids.get(SlimefunItems.ZINC_INGOT), liquids.get(SlimefunItems.STEEL_INGOT)
+            },
+            new ItemStack[]{
+                new SlimefunItemStack(liquids.get(SlimefunItems.HARDENED_METAL_INGOT), 4)
+            }
+        );
+        registerRecipe(
+            3,
+            new ItemStack[]{
                 liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(SlimefunItems.TIN_INGOT)
             },
             new ItemStack[]{
@@ -100,16 +110,6 @@ public class Mixer extends LContainer implements RecipeDisplayItem {
             },
             new ItemStack[]{
                 new SlimefunItemStack(liquids.get(SlimefunItems.STEEL_INGOT), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(SlimefunItems.ALUMINUM_INGOT),
-                liquids.get(SlimefunItems.ZINC_INGOT), liquids.get(SlimefunItems.STEEL_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.HARDENED_METAL_INGOT), 4)
             }
         );
         registerRecipe(
