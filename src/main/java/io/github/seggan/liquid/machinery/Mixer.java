@@ -138,15 +138,6 @@ public class Mixer extends LContainer implements RecipeDisplayItem {
         registerRecipe(
             3,
             new ItemStack[]{
-                liquids.get(SlimefunItems.BRONZE_INGOT), liquids.get(SlimefunItems.GOLD_12K)
-            },
-            new ItemStack[]{
-                liquids.get(SlimefunItems.CORINTHIAN_BRONZE_INGOT), liquids.get(Items.SLAG)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
                 liquids.get(SlimefunItems.TIN_INGOT), liquids.get(SlimefunItems.LEAD_INGOT)
             },
             new ItemStack[]{
@@ -205,7 +196,7 @@ public class Mixer extends LContainer implements RecipeDisplayItem {
                 liquids.get(SlimefunItems.ALUMINUM_INGOT)
             },
             new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.COBALT_INGOT), 3)
+                new SlimefunItemStack(liquids.get(SlimefunItems.MAGNET), 3)
             }
         );
         registerRecipe(
@@ -214,7 +205,7 @@ public class Mixer extends LContainer implements RecipeDisplayItem {
                 liquids.get(SlimefunItems.MAGNESIUM_INGOT), crystals.get(SlimefunItems.SALT)
             },
             new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.REDSTONE_ALLOY), 2)
+                new SlimefunItemStack(crystals.get(SlimefunItems.MAGNESIUM_SALT), 2)
             }
         );
     }
