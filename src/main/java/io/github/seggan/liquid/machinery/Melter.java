@@ -5,6 +5,7 @@ import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.Liquid;
 import io.github.seggan.liquid.LiquidMetal;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
@@ -31,8 +32,20 @@ public class Melter extends AContainer implements RecipeDisplayItem {
             new ItemStack[]{new ItemStack(Material.OBSIDIAN), new ItemStack(Material.BUCKET)},
             new ItemStack[]{new ItemStack(Material.LAVA_BUCKET)}
         );
-
         BiMap<ItemStack, SlimefunItemStack> liquids = LiquidMetal.getLiquids();
+
+        registerRecipe(
+            3,
+            new ItemStack[]{new ItemStack(Material.COAL), new ItemStack(Material.BUCKET)},
+            new ItemStack[]{liquids.get(SlimefunItems.CARBON)}
+        );
+
+        registerRecipe(
+            3,
+            new ItemStack[]{new ItemStack(Material.CHARCOAL), new ItemStack(Material.BUCKET)},
+            new ItemStack[]{liquids.get(SlimefunItems.CARBON)}
+        );
+
         for (ItemStack metal : liquids.keySet()) {
             registerRecipe(
                 3,
@@ -54,6 +67,14 @@ public class Melter extends AContainer implements RecipeDisplayItem {
                 3,
                 new ItemStack[]{ore, new ItemStack(Material.BUCKET)},
                 new ItemStack[]{ores.get(ore)}
+            );
+        }
+        BiMap<SlimefunItemStack, ItemStack> dusts = LiquidMetal.getLiquidDusts();
+        for (ItemStack dust : dusts.keySet()) {
+            registerRecipe(
+                3,
+                new ItemStack[]{dust, new ItemStack(Material.BUCKET)},
+                new ItemStack[]{liquids.get(dusts.get(dust))}
             );
         }
     }

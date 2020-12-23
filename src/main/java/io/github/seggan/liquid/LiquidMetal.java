@@ -19,6 +19,7 @@ public class LiquidMetal extends SlimefunItem {
     private static final HashBiMap<ItemStack, SlimefunItemStack> MELTED_METALS = HashBiMap.create();
     private static final HashBiMap<ItemStack, SlimefunItemStack> MELTED_CRYSTALS = HashBiMap.create();
     private static final HashBiMap<ItemStack, SlimefunItemStack> MELTED_ORES = HashBiMap.create();
+    private static final HashBiMap<SlimefunItemStack, ItemStack> MELTED_DUSTS = HashBiMap.create();
     private static final List<ItemStack> metals = Arrays.asList(
         SlimefunItems.ALUMINUM_BRASS_INGOT,
         SlimefunItems.ALUMINUM_BRONZE_INGOT,
@@ -87,6 +88,17 @@ public class LiquidMetal extends SlimefunItem {
         VanillaItems.NETHERITE_ORE
     );
 
+    static {
+        MELTED_DUSTS.put(SlimefunItems.IRON_DUST, VanillaItems.IRON_INGOT);
+        MELTED_DUSTS.put(SlimefunItems.COPPER_DUST, SlimefunItems.COPPER_INGOT);
+        MELTED_DUSTS.put(SlimefunItems.ALUMINUM_DUST, SlimefunItems.ALUMINUM_INGOT);
+        MELTED_DUSTS.put(SlimefunItems.GOLD_DUST, VanillaItems.GOLD_INGOT);
+        MELTED_DUSTS.put(SlimefunItems.SILVER_DUST, SlimefunItems.SILVER_INGOT);
+        MELTED_DUSTS.put(SlimefunItems.LEAD_DUST, SlimefunItems.LEAD_INGOT);
+        MELTED_DUSTS.put(SlimefunItems.TIN_DUST, SlimefunItems.TIN_INGOT);
+        MELTED_DUSTS.put(SlimefunItems.MAGNESIUM_DUST, SlimefunItems.MAGNESIUM_INGOT);
+    }
+
     public LiquidMetal(SlimefunItemStack item, ItemStack solid) {
         super(Items.category, item, Melter.RECIPE_TYPE, new ItemStack[]{
             solid, new ItemStack(Material.BUCKET), null,
@@ -134,4 +146,9 @@ public class LiquidMetal extends SlimefunItem {
     public static BiMap<ItemStack, SlimefunItemStack> getLiquidOres() {
         return MELTED_ORES;
     }
+
+    public static HashBiMap<SlimefunItemStack, ItemStack> getLiquidDusts() {
+        return MELTED_DUSTS;
+    }
+
 }

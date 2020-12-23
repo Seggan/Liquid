@@ -83,6 +83,19 @@ public final class Items {
         LoreBuilder.powerBuffer(16)
     );
 
+    public static final SlimefunItemStack SPRAY_SOLIDIFIER = new SlimefunItemStack(
+        "SPRAY_SOLIDIFIER",
+        Material.SMITHING_TABLE,
+        "&bSpray Solidifier",
+        "",
+        "&7This solidifier sprays a liquid out, turning",
+        "&7the liquid into its dust form. As a result,",
+        "&7this machine works faster but consumes more",
+        "&7power than a regular solidifier",
+        LoreBuilder.powerPerSecond(64),
+        LoreBuilder.powerBuffer(128)
+    );
+
     public static final SlimefunItemStack SLAG = new SlimefunItemStack(
         "SLAG",
         Material.CHARCOAL,
