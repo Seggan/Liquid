@@ -121,7 +121,7 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
 
         RecipeType.GRIND_STONE.register(new ItemStack[]{Items.SLAG}, SlimefunItems.SIFTED_ORE);
 
-        MixerCategory.INSTANCE.register();
+        MixerCategory.INSTANCE.register(this);
     }
 
     @Override
