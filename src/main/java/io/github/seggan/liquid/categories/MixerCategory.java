@@ -1,29 +1,27 @@
 package io.github.seggan.liquid.categories;
 
+import java.util.List;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.Liquid;
 import io.github.seggan.liquid.machinery.Mixer;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.core.categories.FlexCategory;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
-import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideLayout;
+import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
 
 public class MixerCategory extends FlexCategory {
 
@@ -37,12 +35,12 @@ public class MixerCategory extends FlexCategory {
     }
 
     @Override
-    public boolean isVisible(Player player, PlayerProfile playerProfile, SlimefunGuideLayout slimefunGuideLayout) {
-        return slimefunGuideLayout != SlimefunGuideLayout.CHEAT_SHEET;
+    public boolean isVisible(Player player, PlayerProfile playerProfile, SlimefunGuideMode mode) {
+        return mode != SlimefunGuideMode.CHEAT_MODE;
     }
 
     @Override
-    public void open(Player player, PlayerProfile playerProfile, SlimefunGuideLayout slimefunGuideLayout) {
+    public void open(Player player, PlayerProfile playerProfile, SlimefunGuideMode mode) {
         List<MachineRecipe> recipes = ((Mixer) SlimefunItem.getByItem(Items.MIXER)).getMachineRecipes();
 
         ChestMenu menu = new ChestMenu("&6Mixer Recipes");
@@ -59,7 +57,7 @@ public class MixerCategory extends FlexCategory {
         );
 
         menu.addMenuClickHandler(1, (pl, slot, item, action) -> {
-            SlimefunPlugin.getRegistry().getGuideLayout(slimefunGuideLayout).openMainMenu(playerProfile, 1);
+            SlimefunPlugin.getRegistry().getGuideLayout(mode).openMainMenu(playerProfile, 1);
             return false;
         });
 
@@ -90,7 +88,7 @@ public class MixerCategory extends FlexCategory {
             ChatColor.GRAY + SlimefunPlugin.getLocalization().getMessage(player, "guide.back.guide")))
         );
         menu.addMenuClickHandler(1, (pl, s, is, action) -> {
-            open(player, p, SlimefunGuideLayout.CHEST);
+            open(player, p, SlimefunGuideMode.SURVIVAL_MODE);
             return false;
         });
 
