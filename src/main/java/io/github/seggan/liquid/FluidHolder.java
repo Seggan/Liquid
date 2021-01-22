@@ -100,7 +100,7 @@ public interface FluidHolder extends ItemAttribute {
             if (fluidCapacity > 0) {
                 int currentFluidAmount = getFluidAmount(l);
 
-                // Check if there is even energy stored
+                // Check if there is even any fluids stored
                 if (currentFluidAmount > 0) {
                     int newFluidAmount = Math.max(0, currentFluidAmount - fluidAmount);
                     BlockStorage.addBlockInfo(l, "fluid-amount", String.valueOf(newFluidAmount), false);
