@@ -9,12 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import io.github.thebusybiscuit.slimefun4.core.attributes.ItemAttribute;
-import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNet;
-import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
-import io.github.thebusybiscuit.slimefun4.implementation.items.electric.Capacitor;
 import io.github.thebusybiscuit.slimefun4.utils.NumberUtils;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -71,7 +66,7 @@ public interface FluidHolder extends ItemAttribute {
             }
         } catch (Exception | LinkageError x) {
             Bukkit.getLogger().log(Level.SEVERE, x, () -> "Exception while trying to set the fluid-amount for \""
-                    + getId() + "\" at " + new BlockPosition(l));
+                    + /*getId()*/ "block" + "\" at " + new BlockPosition(l));
         }
     }
 
@@ -91,7 +86,7 @@ public interface FluidHolder extends ItemAttribute {
                 }
             }
         } catch (Exception | LinkageError x) {
-            Bukkit.getLogger().log(Level.SEVERE, x, () -> "Exception while trying to add an fluid-amount for \"" + getId() + "\" at " + new BlockPosition(l));
+            Bukkit.getLogger().log(Level.SEVERE, x, () -> "Exception while trying to add an fluid-amount for \"" + /*getId()*/ "block" + "\" at " + new BlockPosition(l));
         }
     }
 
@@ -113,7 +108,7 @@ public interface FluidHolder extends ItemAttribute {
                 }
             }
         } catch (Exception | LinkageError x) {
-            Bukkit.getLogger().log(Level.SEVERE, x, () -> "Exception while trying to remove an fluid-amount for \"" + getId() + "\" at " + new BlockPosition(l));
+            Bukkit.getLogger().log(Level.SEVERE, x, () -> "Exception while trying to remove an fluid-amount for \"" + /*getId()*/ "block" + "\" at " + new BlockPosition(l));
         }
     }
 
@@ -159,7 +154,7 @@ public interface FluidHolder extends ItemAttribute {
             }
         } catch (Exception | LinkageError x) {
             Bukkit.getLogger().log(Level.SEVERE, x, () -> "Exception while trying to set the fluid-stored for \""
-                    + getId() + "\" at " + new BlockPosition(l));
+                    + /*getId()*/ "block" + "\" at " + new BlockPosition(l));
         }
     }
 
