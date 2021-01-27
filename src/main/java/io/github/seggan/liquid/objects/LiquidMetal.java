@@ -1,7 +1,9 @@
-package io.github.seggan.liquid;
+package io.github.seggan.liquid.objects;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import io.github.seggan.liquid.Items;
+import io.github.seggan.liquid.VanillaItems;
 import io.github.seggan.liquid.machinery.Melter;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;

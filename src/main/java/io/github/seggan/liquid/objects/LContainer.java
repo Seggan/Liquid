@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu.AdvancedMenuClickHandler;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
@@ -144,7 +144,7 @@ public abstract class LContainer extends SlimefunItem implements EnergyNetCompon
             ChestMenuUtils.getEmptyClickHandler());
 
         for (int i : getOutputSlots()) {
-            preset.addMenuClickHandler(i, new AdvancedMenuClickHandler() {
+            preset.addMenuClickHandler(i, new ChestMenu.AdvancedMenuClickHandler() {
 
                 @Override
                 public boolean onClick(Player p, int slot, ItemStack cursor, ClickAction action) {

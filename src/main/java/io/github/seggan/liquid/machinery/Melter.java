@@ -3,7 +3,7 @@ package io.github.seggan.liquid.machinery;
 import com.google.common.collect.BiMap;
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.Liquid;
-import io.github.seggan.liquid.LiquidMetal;
+import io.github.seggan.liquid.objects.LiquidMetal;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;

@@ -7,6 +7,7 @@ import io.github.seggan.liquid.machinery.Melter;
 import io.github.seggan.liquid.machinery.Solidifier;
 import io.github.seggan.liquid.machinery.Mixer;
 import io.github.seggan.liquid.machinery.SpraySolidifier;
+import io.github.seggan.liquid.objects.LiquidMetal;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;

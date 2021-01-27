@@ -1,4 +1,4 @@
-package io.github.seggan.liquid;
+package io.github.seggan.liquid.objects;
 
 import javax.annotation.Nonnull;
 
