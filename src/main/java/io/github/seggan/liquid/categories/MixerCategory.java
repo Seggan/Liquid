@@ -57,7 +57,7 @@ public class MixerCategory extends FlexCategory {
         );
 
         menu.addMenuClickHandler(1, (pl, slot, item, action) -> {
-            SlimefunPlugin.getRegistry().getGuideLayout(mode).openMainMenu(playerProfile, 1);
+            SlimefunPlugin.getRegistry().getSlimefunGuide(mode).openMainMenu(playerProfile, 1);
             return false;
         });
 
