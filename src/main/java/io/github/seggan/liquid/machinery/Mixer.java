@@ -128,7 +128,7 @@ public class Mixer extends LContainer implements RecipeDisplayItem {
             3,
             new ItemStack[]{
                 liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(SlimefunItems.GOLD_12K),
-                liquids.get(SlimefunItems.TIN_INGOT)
+                liquids.get(SlimefunItems.SILVER_INGOT)
             },
             new ItemStack[]{
                 new SlimefunItemStack(liquids.get(SlimefunItems.CORINTHIAN_BRONZE_INGOT), 2),

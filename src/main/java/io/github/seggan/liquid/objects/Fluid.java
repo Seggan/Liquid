@@ -2,7 +2,16 @@ package io.github.seggan.liquid.objects;
 
 import javax.annotation.Nonnull;
 
+import io.github.seggan.liquid.Items;
+import io.github.seggan.liquid.Util;
+import io.github.seggan.liquid.machinery.Mixer;
+import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
+import lombok.Builder;
+import lombok.NonNull;
+import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import org.apache.commons.lang.Validate;
+import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
@@ -13,98 +22,88 @@ import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 
+import java.util.HashSet;
+import java.util.Set;
+
+@Getter
+@Builder
 public class Fluid extends SlimefunItem {
 
-    
-    private @Getter ItemStack recipeDisplayItem;
-    private @Getter ItemStack bottleItem;
-    private @Getter ItemStack bucketItem = this.getItem();
-    private @Getter ItemStack nuggetItem;
-    private @Getter ItemStack ingotItem;
-    private @Getter ItemStack gemItem;
-    private @Getter ItemStack blockItem;
+    private static final Set<Fluid> fluids = new HashSet<>();
 
-    public Fluid(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(category, item, recipeType, recipe);
+    private ItemStack recipeDisplayItem;
+    private ItemStack bottleItem;
+    @NonNull
+    private final ItemStack bucketItem = this.getItem();
+    private ItemStack nuggetItem;
+    private ItemStack ingotItem;
+    private ItemStack gemItem;
+    private ItemStack blockItem;
+    private ItemStack dustItem;
+    private ItemStack oreItem;
 
-        //Maybe figure out how make a fluid not spread and ret-con this for Primal Mana related shenanigans
-        addItemHandler((ItemUseHandler) PlayerRightClickEvent::cancel); 
+    public Fluid(SlimefunItemStack item, ItemStack solid) {
+        super(Items.category, item, Mixer.RECIPE_TYPE, new ItemStack[]{
+            new ItemStack(Material.BUCKET), solid, null,
+            null, null, null,
+            null, null, null
+        });
+
+        fluids.add(this);
+
+        addItemHandler((ItemUseHandler) PlayerRightClickEvent::cancel);
     }
 
-    //I put this here to get around the stack limit of buckets and give people a better way to display a fluid
-    //Ex. STAINED_GLASS_PANES 
+    // I put this here to get around the stack limit of buckets and give people a better way to display a fluid
+    // Ex. STAINED_GLASS_PANES
     public Fluid setRecipeDisplayItem(@Nonnull ItemStack recipeDisplayItem) {
         Validate.notNull(recipeDisplayItem, "recipeDisplayItem must not be null!");
         this.recipeDisplayItem = recipeDisplayItem;
         return this;
     }
 
-    /*
-    *   Overridable ItemStack setters to be helpful in the context of 
-    *   melters and Fluid storage containers. The null returns are so they need to
-    *   override to use it.
-    */
-
-    //Returns Fluid so that you can chain them together on register
-    public Fluid setBottleItem(@Nonnull ItemStack bottleItem) {
-        Validate.notNull(bottleItem, "bottleItem must not be null!");
-        this.bottleItem = bottleItem;
-        return this;
+    public static int getBottleFluidAmount() {
+        return 3;
     }
 
-    public Fluid setBucketItem(@Nonnull ItemStack bucketItem) {
-        Validate.notNull(bucketItem, "bucketItem must not be null!");
-        this.bucketItem = bucketItem;
-        return this;
+    public static int getBucketFluidAmount() {
+        return 9;
     }
 
-    public Fluid setNuggetItem(@Nonnull ItemStack nuggetItem) {
-        Validate.notNull(nuggetItem, "nuggetItem must not be null!");
-        this.nuggetItem = nuggetItem;
-        return this;
+    public static int getNuggetFluidAmount() {
+        return 1;
     }
 
-    public Fluid setIngotItem(@Nonnull ItemStack ingotItem) {
-        Validate.notNull(ingotItem, "ingotItem must not be null");
-        this.ingotItem = ingotItem;
-        return this;
+    public static int getIngotFluidAmount() {
+        return 9;
     }
 
-    public Fluid setGemItem(@Nonnull ItemStack gemItem) {
-        Validate.notNull(gemItem, "gemItem must not be null");
-        this.gemItem = gemItem;
-        return this;
+    public static int getGemFluidAmount() {
+        return 9;
     }
 
-    public Fluid setBlockItem(@Nonnull ItemStack blockItem) {
-        Validate.notNull(blockItem, "blockItem must not be null");
-        this.blockItem = blockItem;
-        return this;
+    public static int getBlockFluidAmount() {
+        return 81;
     }
 
-    // Static Fluid amount getters
-
-    public static final int getBottleFluidAmount() {
-        return 324;
+    public static int getDustFluidAmount() {
+        return 9;
     }
 
-    public static final int getBucketFluidAmount() {
-        return 1000;
+    public static int getOreFluidAmount() {
+        return 18;
     }
 
-    public static final int getNuggetFluidAmount() {
-        return 16;
+    public static void loadItems() {
+
     }
 
-    public static final int getIngotFluidAmount() {
-        return 144;
-    }
-
-    public static final int getGemFluidAmount() {
-        return 144;
-    }
-
-    public static final int getBlockFluidAmount() {
-        return 1296;
+    private static void loadItem(ItemStack item) {
+        SlimefunItemStack stack = new SlimefunItemStack(
+            "MOLTEN_" + Util.getID(item).replace("_INGOT", ""),
+            Material.LAVA_BUCKET,
+            "&6Molten " + ChatUtils.removeColorCodes(ItemUtils.getItemName(item))
+                .replace(" Ingot", "")
+        );
     }
 }
