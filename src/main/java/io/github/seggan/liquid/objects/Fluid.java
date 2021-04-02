@@ -26,14 +26,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Getter
-@Builder
 public class Fluid extends SlimefunItem {
 
     private static final Set<Fluid> fluids = new HashSet<>();
 
     private ItemStack recipeDisplayItem;
     private ItemStack bottleItem;
-    @NonNull
+    @Nonnull
     private final ItemStack bucketItem = this.getItem();
     private ItemStack nuggetItem;
     private ItemStack ingotItem;

@@ -111,10 +111,6 @@ public class LiquidMetal extends SlimefunItem {
         addItemHandler((ItemUseHandler) PlayerRightClickEvent::cancel);
     }
 
-    public static void setupFluids() {
-        new Fluid.FluidBuilder().build();
-    }
-
     public static List<ItemStack> getMetals() {
         return metals;
     }

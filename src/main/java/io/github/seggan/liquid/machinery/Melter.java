@@ -2,7 +2,7 @@ package io.github.seggan.liquid.machinery;
 
 import com.google.common.collect.BiMap;
 import io.github.seggan.liquid.Items;
-import io.github.seggan.liquid.Liquid;
+import io.github.seggan.liquid.LiquidAddon;
 import io.github.seggan.liquid.objects.LiquidMetal;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 public class Melter extends AContainer implements RecipeDisplayItem {
 
     public static final RecipeType RECIPE_TYPE = new RecipeType(
-        new NamespacedKey(Liquid.getInstance(), "melter"),
+        new NamespacedKey(LiquidAddon.getInstance(), "melter"),
         Items.MELTER
     );
 

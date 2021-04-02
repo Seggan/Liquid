@@ -1,11 +1,14 @@
 package io.github.seggan.liquid;
 
+import io.github.mooy1.infinitylib.AbstractAddon;
+import io.github.mooy1.infinitylib.PluginUtils;
+import io.github.mooy1.infinitylib.commands.AbstractCommand;
 import io.github.seggan.liquid.categories.MixerCategory;
 import io.github.seggan.liquid.machinery.Centrifuge;
 import io.github.seggan.liquid.machinery.Crystallizer;
 import io.github.seggan.liquid.machinery.Melter;
-import io.github.seggan.liquid.machinery.Solidifier;
 import io.github.seggan.liquid.machinery.Mixer;
+import io.github.seggan.liquid.machinery.Solidifier;
 import io.github.seggan.liquid.machinery.SpraySolidifier;
 import io.github.seggan.liquid.objects.LiquidMetal;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
@@ -17,29 +20,23 @@ import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.config.Config;
 import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import me.mrCookieSlime.Slimefun.cscorelib2.updater.GitHubBuildsUpdater;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Liquid extends JavaPlugin implements SlimefunAddon {
+public class LiquidAddon extends AbstractAddon implements SlimefunAddon {
 
-    public static Liquid instance = null;
+    public static LiquidAddon instance = null;
 
     @Override
     public void onEnable() {
+        super.onEnable();
+
         instance = this;
 
-        Config cfg = new Config(this);
-
-        if (cfg.getBoolean("options.auto-update") && getDescription().getVersion().startsWith("DEV - ")) {
-            new GitHubBuildsUpdater(this, getFile(), "Seggan/Liquid/master").start();
-        }
-        
-        new Metrics(this, 9408);
+        PluginUtils.setAddon(this);
 
         List<LiquidMetal> metals = new ArrayList<>();
 
@@ -133,22 +130,21 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
     }
 
     @Override
-    public void onDisable() {
-        // Logic for disabling the plugin...
+    protected int getMetricsID() {
+        return 9408;
     }
 
     @Override
-    public String getBugTrackerURL() {
-        return null;
+    protected String getGithubPath() {
+        return "Seggan/Liquid/master";
     }
 
     @Override
-    public JavaPlugin getJavaPlugin() {
-        return this;
+    protected List<AbstractCommand> getSubCommands() {
+        return new ArrayList<>();
     }
 
-    public static Liquid getInstance() {
+    public static LiquidAddon getInstance() {
         return instance;
     }
-
 }

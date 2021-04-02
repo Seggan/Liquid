@@ -2,7 +2,7 @@ package io.github.seggan.liquid.machinery;
 
 import com.google.common.collect.BiMap;
 import io.github.seggan.liquid.Items;
-import io.github.seggan.liquid.Liquid;
+import io.github.seggan.liquid.LiquidAddon;
 import io.github.seggan.liquid.objects.LiquidMetal;
 import io.github.seggan.liquid.VanillaItems;
 import io.github.seggan.liquid.objects.LContainer;
@@ -24,7 +24,7 @@ import java.util.List;
 public class Mixer extends LContainer implements RecipeDisplayItem {
 
     public static final RecipeType RECIPE_TYPE = new RecipeType(
-        new NamespacedKey(Liquid.getInstance(), "mixer"),
+        new NamespacedKey(LiquidAddon.getInstance(), "mixer"),
         Items.MIXER
     );
 

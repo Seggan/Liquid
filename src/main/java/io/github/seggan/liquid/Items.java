@@ -12,7 +12,7 @@ public final class Items {
     private Items() {}
 
     public static final Category category = new Category(
-        new NamespacedKey(Liquid.getInstance(), "liquids"),
+        new NamespacedKey(LiquidAddon.getInstance(), "liquids"),
         new CustomItem(Material.LAVA_BUCKET, "&6Liquids")
     );
 
