@@ -6,14 +6,16 @@ import io.github.seggan.liquid.VanillaItems;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import lombok.Getter;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import me.mrCookieSlime.Slimefun.cscorelib2.chat.ChatColors;
+import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import org.bukkit.inventory.ItemStack;
-import org.nustaq.serialization.serializers.FSTArrayListSerializer;
 
 import javax.annotation.Nonnull;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+@Getter
 public class Liquid {
     public static final Liquid ALUMINUM_BRONZE = new Liquid(SlimefunItems.ALUMINUM_BRONZE_INGOT);
     public static final Liquid ALUMINUM_BRASS = new Liquid(SlimefunItems.ALUMINUM_BRASS_INGOT);
@@ -75,28 +77,35 @@ public class Liquid {
 
     static {
         try {
-            digest = MessageDigest.getInstance("MD5");
+            digest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    @Getter
     private final ItemStack solid;
+    private final String name;
+    private final String id;
+    private final boolean slimefunItem;
 
-    public Liquid(ItemStack solid) {
+    public Liquid(ItemStack solid, String name) {
         this.solid = solid;
-
-        String id;
+        this.name = ChatColors.color(name);
 
         SlimefunItem sfi = SlimefunItem.getByItem(solid);
         if (sfi != null) {
-            id = sfi.getId();
+            this.slimefunItem = true;
+            this.id = sfi.getId();
         } else {
-            id = solid.getType().name();
+            this.slimefunItem = false;
+            this.id = solid.getType().name();
         }
 
-        hashes.put(this, digest.digest(id.getBytes(StandardCharsets.UTF_8)));
+        hashes.put(this, digest.digest(this.id.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    public Liquid(ItemStack solid) {
+        this(solid, "&6Molten " + ItemUtils.getItemName(solid));
     }
 
     @Nonnull
@@ -117,5 +126,18 @@ public class Liquid {
         }
 
         return hash;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof Liquid)) return false;
+
+        return this.id.equals(((Liquid) obj).id);
     }
 }
