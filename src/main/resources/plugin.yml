@@ -4,3 +4,9 @@ main: io.github.seggan.liquid.LiquidAddon
 depend: [Slimefun]
 version: ${project.version}
 api-version: 1.14
+commands:
+  liquid:
+    description: Base Liquid command
+    aliases:
+      - lq
+      - liq

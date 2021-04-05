@@ -1,9 +1,8 @@
-package io.github.seggan.liquid.items;
+package io.github.seggan.liquid.items.fluids;
 
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.seggan.liquid.Items;
-import io.github.seggan.liquid.objects.PersistentLiquid;
-import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
+import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
@@ -13,6 +12,7 @@ import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -26,18 +26,18 @@ import java.util.Objects;
  *
  * @author Seggan
  */
-public class FluidTank extends SlimefunItem {
+public class PortableFluidTank extends UnplaceableBlock {
 
     private static final NamespacedKey LIQUID_KEY = PluginUtils.getKey("liquid_type");
     private static final NamespacedKey AMOUNT_KEY = PluginUtils.getKey("liquid_amount");
 
     private final int capacity;
 
-    public FluidTank(SlimefunItemStack item, ItemStack[] recipe, int capacity) {
+    public PortableFluidTank(ItemStack[] recipe, int capacity) {
         super(Items.category, new SlimefunItemStack(
-            "FLUID_TANK_CAPACITY_" + capacity,
-            SlimefunUtils.getCustomHead("1e78e13fbfc5fe05840edd770cd9b7647279738e2f1b03d908d7fcd125189a9"),
-            "&6Fluid Tank",
+            "PORTABLE_FLUID_TANK_CAPACITY_" + capacity,
+            FluidTankTextures.EMPTY.getTexture(),
+            "&6Portable Fluid Tank",
             "",
             "&7Capacity: " + capacity,
             "&7Contents: None",
@@ -61,12 +61,12 @@ public class FluidTank extends SlimefunItem {
         PersistentDataContainer container = meta.getPersistentDataContainer();
         Liquid liquid = container.get(LIQUID_KEY, PersistentLiquid.TYPE);
         if (liquid == null) {
-            throw new IllegalArgumentException("Meta not a Fluid Tank meta");
+            liquid = Liquid.NONE;
         }
 
         Integer amount = container.get(AMOUNT_KEY, PersistentDataType.INTEGER);
         if (amount == null) {
-            throw new IllegalArgumentException("Meta not a Fluid Tank meta");
+            amount = 0;
         }
 
         return new Pair<>(liquid, amount);
@@ -85,6 +85,8 @@ public class FluidTank extends SlimefunItem {
         List<String> lore = meta.getLore();
         updateLore(lore, liquid, amount);
         meta.setLore(lore);
+
+        FluidTankTextures.getTexture(amount, this.capacity).inject((SkullMeta) meta);
     }
 
     public void setContents(@Nonnull ItemStack stack, @Nonnull Liquid liquid, int amount) {
@@ -97,7 +99,7 @@ public class FluidTank extends SlimefunItem {
         PersistentDataContainer container = meta.getPersistentDataContainer();
         Integer storedAmount = container.get(AMOUNT_KEY, PersistentDataType.INTEGER);
         if (storedAmount == null) {
-            throw new IllegalArgumentException("Meta not a Fluid Tank meta");
+            storedAmount = 0;
         }
 
         int finalAmount = storedAmount + amount;
@@ -107,6 +109,8 @@ public class FluidTank extends SlimefunItem {
         List<String> lore = meta.getLore();
         updateLore(lore, finalAmount);
         meta.setLore(lore);
+
+        FluidTankTextures.getTexture(amount, this.capacity).inject((SkullMeta) meta);
     }
 
     public void addContents(@Nonnull ItemStack stack, int amount) {

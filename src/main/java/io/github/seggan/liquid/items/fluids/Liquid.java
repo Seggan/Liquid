@@ -1,22 +1,25 @@
-package io.github.seggan.liquid.items;
+package io.github.seggan.liquid.items.fluids;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import io.github.seggan.liquid.VanillaItems;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import lombok.Getter;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.chat.ChatColors;
 import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 public class Liquid {
+
+    public static final Liquid NONE = new Liquid(new ItemStack(Material.BARRIER), "&7None");
+
     public static final Liquid ALUMINUM_BRONZE = new Liquid(SlimefunItems.ALUMINUM_BRONZE_INGOT);
     public static final Liquid ALUMINUM_BRASS = new Liquid(SlimefunItems.ALUMINUM_BRASS_INGOT);
     public static final Liquid ALUMINUM = new Liquid(SlimefunItems.ALUMINUM_INGOT);
@@ -71,17 +74,7 @@ public class Liquid {
     public static final Liquid REDSTONE_ALLOY = new Liquid(SlimefunItems.REDSTONE_ALLOY);
     public static final Liquid SULFATE = new Liquid(SlimefunItems.SULFATE);
 
-    private static final BiMap<Liquid, byte[]> hashes = HashBiMap.create();
-
-    private static final MessageDigest digest;
-
-    static {
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException(e);
-        }
-    }
+    private static final Map<String, Liquid> ids = new HashMap<>();
 
     private final ItemStack solid;
     private final String name;
@@ -101,7 +94,7 @@ public class Liquid {
             this.id = solid.getType().name();
         }
 
-        hashes.put(this, digest.digest(this.id.getBytes(StandardCharsets.UTF_8)));
+        ids.put(this.id, this);
     }
 
     public Liquid(ItemStack solid) {
@@ -109,23 +102,24 @@ public class Liquid {
     }
 
     @Nonnull
-    public static Liquid getByHash(byte[] hash) {
-        Liquid liquid = hashes.inverse().get(hash);
+    public static Liquid getById(@Nonnull String id) {
+        Liquid liquid = ids.get(id);
         if (liquid == null) {
-            throw new IllegalArgumentException("No known Liquid with the given hash");
+            throw new IllegalArgumentException("No known Liquid with the given id");
         }
 
         return liquid;
     }
 
-    @Nonnull
-    public byte[] getHash() {
-        byte[] hash = hashes.get(this);
-        if (hash == null) {
-            throw new IllegalStateException("The Liquid has no hash");
+    @Nullable
+    public static Liquid getBySolid(@Nonnull ItemStack solid) {
+        for (Liquid liquid : ids.values()) {
+            if (SlimefunUtils.isItemSimilar(solid, liquid.solid, false, false)) {
+                return liquid;
+            }
         }
 
-        return hash;
+        return null;
     }
 
     @Override
