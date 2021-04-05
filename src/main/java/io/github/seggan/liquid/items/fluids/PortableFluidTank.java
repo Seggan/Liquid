@@ -3,9 +3,8 @@ package io.github.seggan.liquid.items.fluids;
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.seggan.liquid.Items;
 import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
+import lombok.Getter;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.chat.ChatColors;
 import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
@@ -31,6 +30,7 @@ public class PortableFluidTank extends UnplaceableBlock {
     private static final NamespacedKey LIQUID_KEY = PluginUtils.getKey("liquid_type");
     private static final NamespacedKey AMOUNT_KEY = PluginUtils.getKey("liquid_amount");
 
+    @Getter
     private final int capacity;
 
     public PortableFluidTank(ItemStack[] recipe, int capacity) {
@@ -49,25 +49,14 @@ public class PortableFluidTank extends UnplaceableBlock {
 
     private static void updateLore(@Nonnull List<String> lore, @Nonnull Liquid liquid, int amount) {
         lore.set(2, ChatColors.color("&7Contents: " + liquid.getName()));
-        updateLore(lore, amount);
-    }
-
-    private static void updateLore(@Nonnull List<String> lore, int amount) {
         lore.set(3, ChatColors.color("&7Amount: " + amount));
     }
 
     @Nonnull
     public static Pair<Liquid, Integer> getContents(@Nonnull ItemMeta meta) {
         PersistentDataContainer container = meta.getPersistentDataContainer();
-        Liquid liquid = container.get(LIQUID_KEY, PersistentLiquid.TYPE);
-        if (liquid == null) {
-            liquid = Liquid.NONE;
-        }
-
-        Integer amount = container.get(AMOUNT_KEY, PersistentDataType.INTEGER);
-        if (amount == null) {
-            amount = 0;
-        }
+        Liquid liquid = container.getOrDefault(LIQUID_KEY, PersistentLiquid.TYPE, Liquid.NONE);
+        Integer amount = container.getOrDefault(AMOUNT_KEY, PersistentDataType.INTEGER, 0);
 
         return new Pair<>(liquid, amount);
     }
@@ -79,14 +68,19 @@ public class PortableFluidTank extends UnplaceableBlock {
 
     public void setContents(@Nonnull ItemMeta meta, @Nonnull Liquid liquid, int amount) {
         PersistentDataContainer container = meta.getPersistentDataContainer();
-        container.set(LIQUID_KEY, PersistentLiquid.TYPE, liquid);
-        container.set(AMOUNT_KEY, PersistentDataType.INTEGER, amount);
+        if (amount > 0) {
+            container.set(LIQUID_KEY, PersistentLiquid.TYPE, liquid);
+        } else {
+            container.set(LIQUID_KEY, PersistentLiquid.TYPE, Liquid.NONE);
+        }
+        int finalAmount = Math.min(Math.max(0, amount), this.capacity);
+        container.set(AMOUNT_KEY, PersistentDataType.INTEGER, finalAmount);
 
         List<String> lore = meta.getLore();
-        updateLore(lore, liquid, amount);
+        updateLore(lore, liquid, finalAmount);
         meta.setLore(lore);
 
-        FluidTankTextures.getTexture(amount, this.capacity).inject((SkullMeta) meta);
+        FluidTankTextures.getTexture(finalAmount, this.capacity).inject((SkullMeta) meta);
     }
 
     public void setContents(@Nonnull ItemStack stack, @Nonnull Liquid liquid, int amount) {
@@ -95,27 +89,14 @@ public class PortableFluidTank extends UnplaceableBlock {
         stack.setItemMeta(meta);
     }
 
-    public void addContents(@Nonnull ItemMeta meta, int amount) {
-        PersistentDataContainer container = meta.getPersistentDataContainer();
-        Integer storedAmount = container.get(AMOUNT_KEY, PersistentDataType.INTEGER);
-        if (storedAmount == null) {
-            storedAmount = 0;
-        }
-
-        int finalAmount = storedAmount + amount;
-
-        container.set(AMOUNT_KEY, PersistentDataType.INTEGER, Math.min(finalAmount, capacity));
-
-        List<String> lore = meta.getLore();
-        updateLore(lore, finalAmount);
-        meta.setLore(lore);
-
-        FluidTankTextures.getTexture(amount, this.capacity).inject((SkullMeta) meta);
+    public void addContents(@Nonnull ItemMeta meta, @Nonnull Liquid liquid, int amount) {
+        int storedAmount = meta.getPersistentDataContainer().getOrDefault(AMOUNT_KEY, PersistentDataType.INTEGER, 0);
+        this.setContents(meta,liquid, storedAmount + amount);
     }
 
-    public void addContents(@Nonnull ItemStack stack, int amount) {
+    public void addContents(@Nonnull ItemStack stack, @Nonnull Liquid liquid, int amount) {
         ItemMeta meta = Objects.requireNonNull(stack.getItemMeta());
-        addContents(meta, amount);
+        addContents(meta, liquid, amount);
         stack.setItemMeta(meta);
     }
 }

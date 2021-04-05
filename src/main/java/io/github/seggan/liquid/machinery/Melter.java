@@ -1,10 +1,12 @@
 package io.github.seggan.liquid.machinery;
 
+import io.github.mooy1.infinitylib.items.LoreUtils;
 import io.github.mooy1.infinitylib.slimefun.abstracts.TickingContainer;
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.LiquidAddon;
 import io.github.seggan.liquid.items.fluids.FluidHoldingContainer;
 import io.github.seggan.liquid.items.fluids.FluidTankTextures;
+import io.github.seggan.liquid.items.fluids.Liquid;
 import io.github.seggan.liquid.items.fluids.PortableFluidTank;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
@@ -19,16 +21,24 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import me.mrCookieSlime.Slimefun.cscorelib2.chat.ChatColors;
+import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.skull.SkullItem;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class Melter extends TickingContainer implements FluidHoldingContainer, EnergyNetComponent {
+public class Melter extends FluidHoldingContainer implements EnergyNetComponent {
 
     private static final int[] BACKGROUND = new int[]{0, 4, 6, 7, 8, 9, 13, 18, 27, 31, 36, 40, 41, 42, 43, 44};
     private static final int[] INPUT_BORDER = new int[]{1, 3, 10, 12, 19, 21, 28, 30, 37, 38, 39};
@@ -124,7 +134,52 @@ public class Melter extends TickingContainer implements FluidHoldingContainer, E
 
     @Override
     protected void tick(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Config data) {
+        if (!Boolean.parseBoolean(data.getString("enabled"))) return;
 
+        Pair<Liquid, Integer> contents = getContents(data);
+        Liquid liquid = contents.getFirstValue();
+        int amount = contents.getSecondValue();
+
+        ItemStack tankItem = menu.getItemInSlot(TANK_SLOT);
+        SlimefunItem item = SlimefunItem.getByItem(tankItem);
+        if (item instanceof PortableFluidTank && amount > 0) {
+            PortableFluidTank fluidTank = (PortableFluidTank) item;
+
+            ItemMeta meta = tankItem.getItemMeta();
+            Pair<Liquid, Integer> fluidTankContents = PortableFluidTank.getContents(meta);
+            if (fluidTankContents.getSecondValue() < fluidTank.getCapacity()) {
+                Liquid fluidTankLiquid = fluidTankContents.getFirstValue();
+                if (fluidTankLiquid.equals(Liquid.NONE) || liquid.equals(fluidTankLiquid)) {
+                    fluidTank.addContents(meta, liquid, 1);
+                    this.addContents(b, liquid, -1);
+                    tankItem.setItemMeta(meta);
+                    updateLore(menu);
+                }
+            } else {
+                menu.pushItem(tankItem, OUTPUT_SLOTS);
+                menu.consumeItem(TANK_SLOT);
+            }
+        }
+
+        ItemStack solidItem = menu.getItemInSlot(SOLID_SLOT);
+        Liquid liquidSolid = Liquid.getBySolid(solidItem);
+        if (liquidSolid != null && amount < getLiquidCapacity()) {
+            if (liquid.equals(Liquid.NONE) || liquid.equals(liquidSolid)) {
+                addContents(b, liquidSolid, 9);
+                menu.consumeItem(SOLID_SLOT);
+                updateLore(menu);
+            }
+        }
+    }
+
+    private static void updateLore(@Nonnull BlockMenu menu) {
+        Pair<Liquid, Integer> contents = getContents(menu.getBlock());
+        List<String> newLore = new ArrayList<>(Arrays.asList(
+            "",
+            ChatColors.color("&7Contents: " + contents.getFirstValue().getName()),
+            ChatColors.color("&7Amount: " + contents.getSecondValue())
+        ));
+        LoreUtils.setLore(menu.getItemInSlot(CONTENTS), newLore);
     }
 
     @Nonnull
@@ -143,7 +198,7 @@ public class Melter extends TickingContainer implements FluidHoldingContainer, E
 
     @Override
     public int getLiquidCapacity() {
-        return 162;
+        return CAPACITY;
     }
 
 

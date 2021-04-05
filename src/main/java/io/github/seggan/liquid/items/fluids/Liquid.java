@@ -18,6 +18,8 @@ import java.util.Map;
 @Getter
 public class Liquid {
 
+    private static final Map<String, Liquid> ids = new HashMap<>();
+
     public static final Liquid NONE = new Liquid(new ItemStack(Material.BARRIER), "&7None");
 
     public static final Liquid ALUMINUM_BRONZE = new Liquid(SlimefunItems.ALUMINUM_BRONZE_INGOT);
@@ -73,8 +75,6 @@ public class Liquid {
     public static final Liquid CARBON = new Liquid(SlimefunItems.CARBON);
     public static final Liquid REDSTONE_ALLOY = new Liquid(SlimefunItems.REDSTONE_ALLOY);
     public static final Liquid SULFATE = new Liquid(SlimefunItems.SULFATE);
-
-    private static final Map<String, Liquid> ids = new HashMap<>();
 
     private final ItemStack solid;
     private final String name;

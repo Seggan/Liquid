@@ -1,2 +1,2 @@
-options:
-  auto-update: true
+# The rate at which Portable Fluid Tanks transfer fluids in/out in units/Slimefun tick
+liquid-transfer-rate: 3
