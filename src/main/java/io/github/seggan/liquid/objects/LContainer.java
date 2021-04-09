@@ -27,6 +27,7 @@ import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -105,18 +106,20 @@ public abstract class LContainer extends SlimefunItem implements EnergyNetCompon
             }
         };
 
-        addItemHandler((BlockBreakHandler) (blockBreakEvent, itemStack, i, list) -> {
-            Block b = blockBreakEvent.getBlock();
-            BlockMenu inv = BlockStorage.getInventory(b);
+        addItemHandler(new BlockBreakHandler(false, true) {
+            @Override
+            public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
+                Block b = e.getBlock();
+                BlockMenu inv = BlockStorage.getInventory(b);
 
-            if (inv != null) {
-                inv.dropItems(b.getLocation(), getInputSlots());
-                inv.dropItems(b.getLocation(), getOutputSlots());
+                if (inv != null) {
+                    inv.dropItems(b.getLocation(), getInputSlots());
+                    inv.dropItems(b.getLocation(), getOutputSlots());
+                }
+
+                progress.remove(b);
+                processing.remove(b);
             }
-
-            progress.remove(b);
-            processing.remove(b);
-            return true;
         });
 
         registerDefaultRecipes();
