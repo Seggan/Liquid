@@ -2,6 +2,9 @@ package io.github.seggan.liquid.items.fluids;
 
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.seggan.liquid.Items;
+import io.github.seggan.liquid.liquidapi.FluidTankTextures;
+import io.github.seggan.liquid.liquidapi.Liquid;
+import io.github.seggan.liquid.liquidapi.PersistentLiquid;
 import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
 import lombok.Getter;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;

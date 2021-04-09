@@ -1,4 +1,4 @@
-package io.github.seggan.liquid.items.fluids;
+package io.github.seggan.liquid.liquidapi;
 
 import org.bukkit.persistence.PersistentDataAdapterContext;
 import org.bukkit.persistence.PersistentDataType;

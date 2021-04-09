@@ -1,14 +1,5 @@
 package io.github.seggan.liquid.categories;
 
-import java.util.List;
-
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.LiquidAddon;
 import io.github.seggan.liquid.machinery.Mixer;
@@ -18,10 +9,17 @@ import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
+import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import javax.annotation.Nonnull;
 
 public class MixerCategory extends FlexCategory {
 
@@ -35,13 +33,13 @@ public class MixerCategory extends FlexCategory {
     }
 
     @Override
-    public boolean isVisible(Player player, PlayerProfile playerProfile, SlimefunGuideMode mode) {
+    public boolean isVisible(@Nonnull Player player, @Nonnull PlayerProfile profile, @Nonnull SlimefunGuideMode mode) {
         return mode != SlimefunGuideMode.CHEAT_MODE;
     }
 
     @Override
     public void open(Player player, PlayerProfile playerProfile, SlimefunGuideMode mode) {
-        List<MachineRecipe> recipes = ((Mixer) SlimefunItem.getByItem(Items.MIXER)).getMachineRecipes();
+        // List<MachineRecipe> recipes = ((Mixer) SlimefunItem.getByItem(Items.MIXER)).getMachineRecipes();
 
         ChestMenu menu = new ChestMenu("&6Mixer Recipes");
 
@@ -62,14 +60,14 @@ public class MixerCategory extends FlexCategory {
         });
 
         int i = 9;
-        for (MachineRecipe recipe : recipes) {
+        /*for (MachineRecipe recipe : recipes) {
             ItemStack out = recipe.getOutput()[0].clone();
             out.setAmount(1);
             menu.addItem(i++, out, (player1, i1, itemStack, clickAction) -> {
                 displayItem(playerProfile, recipe);
                 return false;
             });
-        }
+        }*/
 
         menu.open(player);
     }

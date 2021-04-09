@@ -1,4 +1,4 @@
-package io.github.seggan.liquid.items.fluids;
+package io.github.seggan.liquid.liquidapi;
 
 import io.github.mooy1.infinitylib.items.LoreUtils;
 import io.github.mooy1.infinitylib.slimefun.abstracts.TickingContainer;

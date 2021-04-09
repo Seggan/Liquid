@@ -1,4 +1,4 @@
-package io.github.seggan.liquid.items.fluids;
+package io.github.seggan.liquid.liquidapi;
 
 import io.github.thebusybiscuit.slimefun4.utils.PatternUtils;
 import lombok.AccessLevel;

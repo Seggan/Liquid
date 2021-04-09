@@ -1,4 +1,4 @@
-package io.github.seggan.liquid.items.fluids;
+package io.github.seggan.liquid.liquidapi;
 
 import io.github.seggan.liquid.VanillaItems;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;

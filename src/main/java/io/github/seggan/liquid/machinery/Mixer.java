@@ -1,27 +1,26 @@
 package io.github.seggan.liquid.machinery;
 
-import com.google.common.collect.BiMap;
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.LiquidAddon;
-import io.github.seggan.liquid.objects.LiquidMetal;
-import io.github.seggan.liquid.VanillaItems;
-import io.github.seggan.liquid.objects.LContainer;
-import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
+import io.github.seggan.liquid.liquidapi.FluidHoldingContainer;
+import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
+import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import org.bukkit.Material;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
+import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
+import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Mixer extends LContainer implements RecipeDisplayItem {
+// TODO make it consume energy
+public class Mixer extends FluidHoldingContainer implements EnergyNetComponent {
 
     public static final RecipeType RECIPE_TYPE = new RecipeType(
         new NamespacedKey(LiquidAddon.getInstance(), "mixer"),
@@ -34,224 +33,35 @@ public class Mixer extends LContainer implements RecipeDisplayItem {
     }
 
     @Override
-    protected void registerDefaultRecipes() {
-        BiMap<ItemStack, SlimefunItemStack> liquids = LiquidMetal.getLiquids();
-        BiMap<ItemStack, SlimefunItemStack> crystals = LiquidMetal.getLiquidCrystals();
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(SlimefunItems.ALUMINUM_INGOT),
-                liquids.get(SlimefunItems.ZINC_INGOT), liquids.get(SlimefunItems.STEEL_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.HARDENED_METAL_INGOT), 4)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(SlimefunItems.TIN_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.BRONZE_INGOT), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(SlimefunItems.ZINC_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.BRASS_INGOT), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.BRONZE_INGOT), liquids.get(SlimefunItems.ALUMINUM_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.ALUMINUM_BRONZE_INGOT), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.BRASS_INGOT), liquids.get(SlimefunItems.ALUMINUM_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.ALUMINUM_BRASS_INGOT), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(SlimefunItems.ALUMINUM_INGOT),
-                liquids.get(SlimefunItems.TIN_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.ALUMINUM_BRONZE_INGOT), 3)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(SlimefunItems.ALUMINUM_INGOT),
-                liquids.get(SlimefunItems.ZINC_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.ALUMINUM_BRASS_INGOT), 3)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.CARBON), liquids.get(VanillaItems.IRON_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.STEEL_INGOT), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(SlimefunItems.ALUMINUM_INGOT),
-                liquids.get(SlimefunItems.GOLD_12K), liquids.get(SlimefunItems.HARDENED_METAL_INGOT),
-                liquids.get(SlimefunItems.LEAD_INGOT), liquids.get(SlimefunItems.STEEL_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.REINFORCED_ALLOY_INGOT), 3),
-                new SlimefunItemStack(liquids.get(Items.SLAG), 3)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(SlimefunItems.GOLD_12K),
-                liquids.get(SlimefunItems.SILVER_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.CORINTHIAN_BRONZE_INGOT), 2),
-                liquids.get(Items.SLAG)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.TIN_INGOT), liquids.get(SlimefunItems.LEAD_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.SOLDER_INGOT), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.SILVER_INGOT), liquids.get(SlimefunItems.COPPER_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.BILLON_INGOT), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.SILICON), liquids.get(VanillaItems.IRON_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.FERROSILICON), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.HARDENED_METAL_INGOT), liquids.get(VanillaItems.REDSTONE)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.REDSTONE_ALLOY), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.COPPER_INGOT), liquids.get(VanillaItems.IRON_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.NICKEL_INGOT), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.NICKEL_INGOT), liquids.get(VanillaItems.IRON_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.COBALT_INGOT), 2)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.COBALT_INGOT), liquids.get(SlimefunItems.NICKEL_INGOT),
-                liquids.get(SlimefunItems.ALUMINUM_INGOT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(liquids.get(SlimefunItems.MAGNET), 3)
-            }
-        );
-        registerRecipe(
-            3,
-            new ItemStack[]{
-                liquids.get(SlimefunItems.MAGNESIUM_INGOT), crystals.get(SlimefunItems.SALT)
-            },
-            new ItemStack[]{
-                new SlimefunItemStack(crystals.get(SlimefunItems.MAGNESIUM_SALT), 2)
-            }
-        );
+    protected void setupMenu(@Nonnull BlockMenuPreset preset) {
+
     }
 
     @Nonnull
     @Override
-    public List<ItemStack> getDisplayRecipes() {
-        List<ItemStack> displayRecipes = new ArrayList<>(recipes.size() * 2);
-
-        for (MachineRecipe recipe : recipes) {
-            displayRecipes.add(new CustomItem(
-                new ItemStack(Material.LAVA_BUCKET, recipe.getInput().length),
-                "&3Multiple Input Recipe")); // Can't exactly show all 9 items at once
-            displayRecipes.add(recipe.getOutput()[0]); // Main output should be the first item
-        }
-
-        return displayRecipes;
+    protected int[] getTransportSlots(@Nonnull DirtyChestMenu menu, @Nonnull ItemTransportFlow flow, ItemStack item) {
+        return new int[0];
     }
 
     @Override
-    public int getInventoryType() {
+    protected void tick(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Config data) {
+
+    }
+
+    @Override
+    protected int getLiquidCapacity(int tankId) {
         return 0;
     }
 
-    @Override
-    public ItemStack getProgressBar() {
-        return new ItemStack(Material.FLINT_AND_STEEL);
-    }
 
+    @Nonnull
     @Override
-    public int getEnergyConsumption() {
-        return 64;
-    }
-
-    @Override
-    public int getSpeed() {
-        return 1;
-    }
-
-    @Override
-    public String getMachineIdentifier() {
-        return "MIXER";
+    public EnergyNetComponentType getEnergyComponentType() {
+        return null;
     }
 
     @Override
     public int getCapacity() {
-        return 128;
+        return 0;
     }
 }
