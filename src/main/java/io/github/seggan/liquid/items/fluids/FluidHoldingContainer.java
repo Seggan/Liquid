@@ -1,18 +1,21 @@
 package io.github.seggan.liquid.items.fluids;
 
+import io.github.mooy1.infinitylib.items.LoreUtils;
 import io.github.mooy1.infinitylib.slimefun.abstracts.TickingContainer;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import me.mrCookieSlime.Slimefun.cscorelib2.chat.ChatColors;
 import org.bukkit.block.Block;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class FluidHoldingContainer extends TickingContainer {
 
@@ -20,37 +23,34 @@ public abstract class FluidHoldingContainer extends TickingContainer {
         super(category, item, recipeType, recipe);
     }
 
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    protected void onPlace(@Nonnull BlockPlaceEvent e, @Nonnull Block b) {
-        setContents(b, Liquid.NONE, 0);
-    }
-
-    protected abstract int getLiquidCapacity();
+    protected abstract int getLiquidCapacity(int tankId);
 
     @Nonnull
-    protected static Pair<Liquid, Integer> getContents(@Nonnull Config config) {
-        Liquid liquid = Liquid.getById(config.getString("storedLiquid"));
-        int amount = Integer.parseInt(config.getString("liquidAmount"));
-        return new Pair<>(liquid, amount);
-    }
-
-    @Nonnull
-    protected static Pair<Liquid, Integer> getContents(@Nonnull Block b) {
-        return getContents(BlockStorage.getLocationInfo(b.getLocation()));
-    }
-
-    protected void setContents(@Nonnull Block b, @Nonnull Liquid liquid, int amount) {
-        if (amount > 0) {
-            BlockStorage.addBlockInfo(b, "storedLiquid", liquid.getId());
+    protected InternalFluidTank getContents(@Nonnull Config config, int tankId) {
+        String s = config.getString("tank" + tankId);
+        if (s == null) {
+            return InternalFluidTank.create(tankId, this.getLiquidCapacity(tankId));
         } else {
-            BlockStorage.addBlockInfo(b, "storedLiquid", Liquid.NONE.getId());
+            return InternalFluidTank.deserialize(s);
         }
-        BlockStorage.addBlockInfo(b, "liquidAmount", String.valueOf(Math.min(Math.max(amount, 0), this.getLiquidCapacity())));
     }
 
-    protected void addContents(@Nonnull Block b, Liquid liquid, int amount) {
-        int storedAmount = Integer.parseInt(BlockStorage.getLocationInfo(b.getLocation(), "liquidAmount"));
-        setContents(b, liquid, storedAmount + amount);
+    @Nonnull
+    protected InternalFluidTank getContents(@Nonnull Block b, int tankId) {
+        return this.getContents(BlockStorage.getLocationInfo(b.getLocation()), tankId);
+    }
+
+    protected void setContents(@Nonnull Block b, @Nonnull InternalFluidTank tank) {
+        BlockStorage.addBlockInfo(b, "tank" + tank.getId(), tank.serialize());
+    }
+
+    protected final void updateLore(@Nonnull BlockMenu menu, int slot, int tankId) {
+        InternalFluidTank contents = this.getContents(menu.getBlock(), tankId);
+        List<String> newLore = new ArrayList<>(Arrays.asList(
+            "",
+            ChatColors.color("&7Contents: " + contents.getLiquid().getName()),
+            ChatColors.color("&7Amount: " + contents.getAmount())
+        ));
+        LoreUtils.setLore(menu.getItemInSlot(slot), newLore);
     }
 }

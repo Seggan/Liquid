@@ -85,7 +85,7 @@ public class PortableFluidTank extends UnplaceableBlock {
 
     public void setContents(@Nonnull ItemStack stack, @Nonnull Liquid liquid, int amount) {
         ItemMeta meta = Objects.requireNonNull(stack.getItemMeta());
-        setContents(meta, liquid, amount);
+        this.setContents(meta, liquid, amount);
         stack.setItemMeta(meta);
     }
 
@@ -96,7 +96,7 @@ public class PortableFluidTank extends UnplaceableBlock {
 
     public void addContents(@Nonnull ItemStack stack, @Nonnull Liquid liquid, int amount) {
         ItemMeta meta = Objects.requireNonNull(stack.getItemMeta());
-        addContents(meta, liquid, amount);
+        this.addContents(meta, liquid, amount);
         stack.setItemMeta(meta);
     }
 }

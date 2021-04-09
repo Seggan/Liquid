@@ -1,11 +1,11 @@
 package io.github.seggan.liquid.machinery;
 
-import io.github.mooy1.infinitylib.items.LoreUtils;
-import io.github.mooy1.infinitylib.slimefun.abstracts.TickingContainer;
+import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.LiquidAddon;
 import io.github.seggan.liquid.items.fluids.FluidHoldingContainer;
 import io.github.seggan.liquid.items.fluids.FluidTankTextures;
+import io.github.seggan.liquid.items.fluids.InternalFluidTank;
 import io.github.seggan.liquid.items.fluids.Liquid;
 import io.github.seggan.liquid.items.fluids.PortableFluidTank;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
@@ -21,12 +21,9 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import me.mrCookieSlime.Slimefun.cscorelib2.chat.ChatColors;
 import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.skull.SkullItem;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -34,9 +31,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Melter extends FluidHoldingContainer implements EnergyNetComponent {
 
@@ -119,14 +113,14 @@ public class Melter extends FluidHoldingContainer implements EnergyNetComponent 
             menu.replaceExistingItem(ENABLED, ENABLED_ITEM);
             menu.addMenuClickHandler(ENABLED, (p, slot, item, action) -> {
                 BlockStorage.addBlockInfo(b, "enabled", Boolean.toString(false));
-                onNewInstance(menu, b);
+                this.onNewInstance(menu, b);
                 return false;
             });
         } else {
             menu.replaceExistingItem(ENABLED, DISABLED_ITEM);
             menu.addMenuClickHandler(ENABLED, (p, slot, item, action) -> {
                 BlockStorage.addBlockInfo(b, "enabled", Boolean.toString(true));
-                onNewInstance(menu, b);
+                this.onNewInstance(menu, b);
                 return false;
             });
         }
@@ -136,9 +130,9 @@ public class Melter extends FluidHoldingContainer implements EnergyNetComponent 
     protected void tick(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Config data) {
         if (!Boolean.parseBoolean(data.getString("enabled"))) return;
 
-        Pair<Liquid, Integer> contents = getContents(data);
-        Liquid liquid = contents.getFirstValue();
-        int amount = contents.getSecondValue();
+        InternalFluidTank tank = this.getContents(data, 0);
+        Liquid liquid = tank.getLiquid();
+        int amount = tank.getAmount();
 
         ItemStack tankItem = menu.getItemInSlot(TANK_SLOT);
         SlimefunItem item = SlimefunItem.getByItem(tankItem);
@@ -147,13 +141,19 @@ public class Melter extends FluidHoldingContainer implements EnergyNetComponent 
 
             ItemMeta meta = tankItem.getItemMeta();
             Pair<Liquid, Integer> fluidTankContents = PortableFluidTank.getContents(meta);
+            // Chech iif not full
             if (fluidTankContents.getSecondValue() < fluidTank.getCapacity()) {
                 Liquid fluidTankLiquid = fluidTankContents.getFirstValue();
+                // Check if liquids are compatible
                 if (fluidTankLiquid.equals(Liquid.NONE) || liquid.equals(fluidTankLiquid)) {
-                    fluidTank.addContents(meta, liquid, 1);
-                    this.addContents(b, liquid, -1);
+                    int rate = PluginUtils.getConfigInt("liquid-transfer-rate", 1, Integer.MAX_VALUE);
+
+                    fluidTank.addContents(meta, liquid, rate);
+                    tank.addContents(liquid, -rate);
+                    this.setContents(b, tank);
+
                     tankItem.setItemMeta(meta);
-                    updateLore(menu);
+                    this.updateLore(menu, CONTENTS, 0);
                 }
             } else {
                 menu.pushItem(tankItem, OUTPUT_SLOTS);
@@ -161,25 +161,20 @@ public class Melter extends FluidHoldingContainer implements EnergyNetComponent 
             }
         }
 
+        tank = this.getContents(b, 0);
+        liquid = tank.getLiquid();
+        amount = tank.getAmount();
+
         ItemStack solidItem = menu.getItemInSlot(SOLID_SLOT);
         Liquid liquidSolid = Liquid.getBySolid(solidItem);
-        if (liquidSolid != null && amount < getLiquidCapacity()) {
+        if (liquidSolid != null && amount < this.getLiquidCapacity(0)) {
             if (liquid.equals(Liquid.NONE) || liquid.equals(liquidSolid)) {
-                addContents(b, liquidSolid, 9);
+                tank.addContents(liquidSolid, 9);
+                this.setContents(b, tank);
                 menu.consumeItem(SOLID_SLOT);
-                updateLore(menu);
+                this.updateLore(menu, CONTENTS, 0);
             }
         }
-    }
-
-    private static void updateLore(@Nonnull BlockMenu menu) {
-        Pair<Liquid, Integer> contents = getContents(menu.getBlock());
-        List<String> newLore = new ArrayList<>(Arrays.asList(
-            "",
-            ChatColors.color("&7Contents: " + contents.getFirstValue().getName()),
-            ChatColors.color("&7Amount: " + contents.getSecondValue())
-        ));
-        LoreUtils.setLore(menu.getItemInSlot(CONTENTS), newLore);
     }
 
     @Nonnull
@@ -197,7 +192,7 @@ public class Melter extends FluidHoldingContainer implements EnergyNetComponent 
     }
 
     @Override
-    public int getLiquidCapacity() {
+    public int getLiquidCapacity(int tankId) {
         return CAPACITY;
     }
 
