@@ -1,6 +1,7 @@
 package io.github.seggan.liquid.objects;
 
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -104,7 +105,8 @@ public abstract class LContainer extends SlimefunItem implements EnergyNetCompon
             }
         };
 
-        registerBlockHandler(item.getItemId(), (p, b, tool, reason) -> {
+        addItemHandler((BlockBreakHandler) (blockBreakEvent, itemStack, i, list) -> {
+            Block b = blockBreakEvent.getBlock();
             BlockMenu inv = BlockStorage.getInventory(b);
 
             if (inv != null) {
