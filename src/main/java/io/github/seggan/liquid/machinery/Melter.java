@@ -32,6 +32,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 
+// TODO make it consume energy
 public class Melter extends FluidHoldingContainer implements EnergyNetComponent {
 
     private static final int[] BACKGROUND = new int[]{0, 4, 6, 7, 8, 9, 13, 18, 27, 31, 36, 40, 41, 42, 43, 44};
@@ -136,12 +137,12 @@ public class Melter extends FluidHoldingContainer implements EnergyNetComponent 
 
         ItemStack tankItem = menu.getItemInSlot(TANK_SLOT);
         SlimefunItem item = SlimefunItem.getByItem(tankItem);
-        if (item instanceof PortableFluidTank && amount > 0) {
+        if (item instanceof PortableFluidTank && amount > 0 && tankItem.getAmount() == 1) {
             PortableFluidTank fluidTank = (PortableFluidTank) item;
 
             ItemMeta meta = tankItem.getItemMeta();
             Pair<Liquid, Integer> fluidTankContents = PortableFluidTank.getContents(meta);
-            // Chech iif not full
+            // Check if not full
             if (fluidTankContents.getSecondValue() < fluidTank.getCapacity()) {
                 Liquid fluidTankLiquid = fluidTankContents.getFirstValue();
                 // Check if liquids are compatible
