@@ -63,4 +63,8 @@ public class InternalFluidTank {
     public void addContents(@Nonnull Liquid liquid, int amount) {
         this.setContents(liquid, this.amount + amount);
     }
+
+    public String toString() {
+        return "InternalFluidTank[id=" + this.getId() + ", capacity=" + this.getCapacity() + ", liquid=" + this.getLiquid().getName() + ", amount=" + this.getAmount() + "]";
+    }
 }

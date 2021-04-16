@@ -1,6 +1,5 @@
 package io.github.seggan.liquid.machinery;
 
-import com.google.common.collect.BiMap;
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.LiquidAddon;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
@@ -25,20 +24,7 @@ public class Solidifier extends AContainer implements RecipeDisplayItem {
 
     @Override
     protected void registerDefaultRecipes() {
-        registerRecipe(
-            10,
-            new ItemStack[]{new ItemStack(Material.LAVA_BUCKET)},
-            new ItemStack[]{new ItemStack(Material.OBSIDIAN), new ItemStack(Material.BUCKET)}
-        );
 
-        BiMap<SlimefunItemStack, ItemStack> liquids = LiquidMetal.getLiquids().inverse();
-        for (SlimefunItemStack liquid : liquids.keySet()) {
-            registerRecipe(
-                10,
-                new ItemStack[]{liquid},
-                new ItemStack[]{liquids.get(liquid), new ItemStack(Material.BUCKET)}
-            );
-        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-package io.github.seggan.liquid.liquidapi;
+package io.github.seggan.liquid.items.fluids;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;

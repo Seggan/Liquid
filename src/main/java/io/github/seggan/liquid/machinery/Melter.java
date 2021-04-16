@@ -3,9 +3,9 @@ package io.github.seggan.liquid.machinery;
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.LiquidAddon;
+import io.github.seggan.liquid.items.fluids.FluidTankTextures;
 import io.github.seggan.liquid.items.fluids.PortableFluidTank;
 import io.github.seggan.liquid.liquidapi.FluidHoldingContainer;
-import io.github.seggan.liquid.liquidapi.FluidTankTextures;
 import io.github.seggan.liquid.liquidapi.InternalFluidTank;
 import io.github.seggan.liquid.liquidapi.Liquid;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
@@ -21,14 +21,12 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.skull.SkullItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 
@@ -131,44 +129,22 @@ public class Melter extends FluidHoldingContainer implements EnergyNetComponent 
     protected void tick(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Config data) {
         if (!Boolean.parseBoolean(data.getString("enabled"))) return;
 
-        InternalFluidTank tank = this.getContents(data, 0);
-        Liquid liquid = tank.getLiquid();
-        int amount = tank.getAmount();
-
-        ItemStack tankItem = menu.getItemInSlot(TANK_SLOT);
-        SlimefunItem item = SlimefunItem.getByItem(tankItem);
-        if (item instanceof PortableFluidTank && amount > 0 && tankItem.getAmount() == 1) {
-            PortableFluidTank fluidTank = (PortableFluidTank) item;
-
-            ItemMeta meta = tankItem.getItemMeta();
-            Pair<Liquid, Integer> fluidTankContents = PortableFluidTank.getContents(meta);
-            // Check if not full
-            if (fluidTankContents.getSecondValue() < fluidTank.getCapacity()) {
-                Liquid fluidTankLiquid = fluidTankContents.getFirstValue();
-                // Check if liquids are compatible
-                if (fluidTankLiquid.equals(Liquid.NONE) || liquid.equals(fluidTankLiquid)) {
-                    int rate = PluginUtils.getConfigInt("liquid-transfer-rate", 1, Integer.MAX_VALUE);
-
-                    fluidTank.addContents(meta, liquid, rate);
-                    tank.addContents(liquid, -rate);
-                    this.setContents(b, tank);
-
-                    tankItem.setItemMeta(meta);
-                    this.updateLore(menu, CONTENTS, 0);
-                }
-            } else {
-                menu.pushItem(tankItem, OUTPUT_SLOTS);
+        if (this.transferToTank(menu, TANK_SLOT, PluginUtils.getConfigInt("liquid-transfer-rate", 1, Integer.MAX_VALUE), 0)) {
+            this.updateLore(menu, CONTENTS, 0);
+        } else {
+            ItemStack ti = menu.getItemInSlot(TANK_SLOT);
+            if (ti != null && ti.getType() != Material.AIR) {
+                menu.pushItem(ti, OUTPUT_SLOTS);
                 menu.consumeItem(TANK_SLOT);
             }
         }
 
-        tank = this.getContents(b, 0);
-        liquid = tank.getLiquid();
-        amount = tank.getAmount();
+        InternalFluidTank tank = this.getContents(b, 0);
+        Liquid liquid = tank.getLiquid();
 
         ItemStack solidItem = menu.getItemInSlot(SOLID_SLOT);
         Liquid liquidSolid = Liquid.getBySolid(solidItem);
-        if (liquidSolid != null && amount < this.getLiquidCapacity(0)) {
+        if (liquidSolid != null && tank.getAmount() < this.getLiquidCapacity(0)) {
             if (liquid.equals(Liquid.NONE) || liquid.equals(liquidSolid)) {
                 tank.addContents(liquidSolid, 9);
                 this.setContents(b, tank);

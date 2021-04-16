@@ -1,10 +1,13 @@
 package io.github.seggan.liquid.machinery;
 
+import com.google.common.collect.ImmutableSet;
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.LiquidAddon;
 import io.github.seggan.liquid.items.fluids.PortableFluidTank;
 import io.github.seggan.liquid.liquidapi.FluidHoldingContainer;
+import io.github.seggan.liquid.liquidapi.InternalFluidTank;
 import io.github.seggan.liquid.liquidapi.Liquid;
+import io.github.seggan.liquid.objects.MixerRecipe;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -26,6 +29,8 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Set;
 
 // TODO make it consume energy
 public class Mixer extends FluidHoldingContainer implements EnergyNetComponent {
@@ -67,9 +72,14 @@ public class Mixer extends FluidHoldingContainer implements EnergyNetComponent {
         Items.MIXER
     );
 
+    private static final Set<MixerRecipe> recipes = new HashSet<>();
 
     public Mixer(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
+    }
+
+    public static void addRecipe(Liquid onel, int onea, Liquid twol, int twoa, Liquid threel, int threea, Liquid outl, int outa) {
+        recipes.add(MixerRecipe.createRecipe(onel, onea, twol, twoa, threel, threea, outl, outa));
     }
 
     @Override
@@ -138,7 +148,22 @@ public class Mixer extends FluidHoldingContainer implements EnergyNetComponent {
 
     @Override
     protected void tick(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Config data) {
+        if (!Boolean.parseBoolean(data.getString("enabled"))) return;
 
+        InternalFluidTank t1 = this.getContents(b, 0);
+        InternalFluidTank t2 = this.getContents(b, 1);
+        InternalFluidTank t3 = this.getContents(b, 2);
+        InternalFluidTank out = this.getContents(b, 3);
+        for (MixerRecipe recipe : recipes) {
+            if (recipe.matchesAndConsume(t1, t2, t3, out)) {
+                this.setContents(b, t1, t2, t3, out);
+                this.updateLore(menu, TANK_0_CONTENTS, t1.getId());
+                this.updateLore(menu, TANK_1_CONTENTS, t2.getId());
+                this.updateLore(menu, TANK_2_CONTENTS, t3.getId());
+                this.updateLore(menu, OUTPUT_TANK_CONTENTS, out.getId());
+                break;
+            }
+        }
     }
 
     @Nonnull
@@ -149,6 +174,8 @@ public class Mixer extends FluidHoldingContainer implements EnergyNetComponent {
             if (it instanceof PortableFluidTank) {
                 Pair<Liquid, Integer> contents = PortableFluidTank.getContents(item);
                 Liquid liquid = contents.getFirstValue();
+
+                if (!(menu instanceof BlockMenu)) return new int[0];
                 Block b = ((BlockMenu) menu).getBlock();
 
                 if (this.getContents(b, 0).getLiquid().equals(liquid)) {
@@ -185,5 +212,9 @@ public class Mixer extends FluidHoldingContainer implements EnergyNetComponent {
     @Override
     public int getCapacity() {
         return 512;
+    }
+
+    public static ImmutableSet<MixerRecipe> getRecipes() {
+        return ImmutableSet.copyOf(recipes);
     }
 }
