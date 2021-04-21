@@ -2,6 +2,7 @@ package io.github.seggan.liquid;
 
 import io.github.mooy1.infinitylib.AbstractAddon;
 import io.github.mooy1.infinitylib.PluginUtils;
+import io.github.mooy1.infinitylib.bstats.bukkit.Metrics;
 import io.github.mooy1.infinitylib.commands.AbstractCommand;
 import io.github.seggan.liquid.categories.MixerCategory;
 import io.github.seggan.liquid.items.fluids.PortableFluidTank;
@@ -10,13 +11,28 @@ import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.java.JavaPluginLoader;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LiquidAddon extends AbstractAddon implements SlimefunAddon {
+public final class LiquidAddon extends AbstractAddon implements SlimefunAddon {
 
-    public static LiquidAddon instance = null;
+    private static LiquidAddon instance = null;
+
+    public LiquidAddon()
+    {
+        super();
+    }
+
+    protected LiquidAddon(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file)
+    {
+        super(loader, description, dataFolder, file);
+    }
 
     @Override
     public void onEnable() {
@@ -24,7 +40,7 @@ public class LiquidAddon extends AbstractAddon implements SlimefunAddon {
 
         instance = this;
 
-        PluginUtils.setAddon(this);
+        PluginUtils.setPlugin(this);
 
         new PortableFluidTank(new ItemStack[9], 100).register(this);
 
@@ -75,22 +91,25 @@ public class LiquidAddon extends AbstractAddon implements SlimefunAddon {
         MixerCategory.INSTANCE.register(this);
     }
 
+    @Nullable
     @Override
-    protected int getMetricsID() {
-        return 9408;
+    protected Metrics setupMetrics() {
+        return new Metrics(this, 9408);
     }
 
+    @Nonnull
     @Override
     protected String getGithubPath() {
         return "Seggan/Liquid/master";
     }
 
+    @Nonnull
     @Override
     protected List<AbstractCommand> getSubCommands() {
         return new ArrayList<>();
     }
 
-    public static LiquidAddon getInstance() {
+    public static LiquidAddon inst() {
         return instance;
     }
 }

@@ -28,7 +28,7 @@ public class MixerCategory extends FlexCategory {
     private final int[] recipeSlots = new int[] {12, 13, 14, 21, 22, 23, 30, 31, 32};
 
     public MixerCategory() {
-        super(new NamespacedKey(LiquidAddon.getInstance(), "Mixer_recipes_category"),
+        super(new NamespacedKey(LiquidAddon.inst(), "Mixer_recipes_category"),
             new CustomItem(Items.MIXER.getType(), "&6Mixer Recipes"));
     }
 

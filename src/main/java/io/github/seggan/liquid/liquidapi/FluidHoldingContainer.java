@@ -68,8 +68,8 @@ public abstract class FluidHoldingContainer extends TickingContainer {
     }
 
     /**
-     * Transfers a certain amount of liquid (if compatible) from the specified {@link InternalFluidTank} to the {@link
-     * PortableFluidTank}
+     * Transfers a certain amount of liquid (if compatible) from the specified {@link InternalFluidTank} to the
+     * {@link PortableFluidTank}
      *
      * @param menu the {@link BlockMenu}
      * @param portableTankSlot the slot in the menu that the {@link PortableFluidTank} is in
@@ -79,7 +79,7 @@ public abstract class FluidHoldingContainer extends TickingContainer {
      * @return {@code true} if the transfer succeeded, {@code false} otherwise (i.e. incompatible fluids or
      * empty/full tank)
      */
-    protected final boolean transferToTank(@Nonnull BlockMenu menu, int portableTankSlot, int amount, int internalTankId) {
+    protected final boolean transferToPortableTank(@Nonnull BlockMenu menu, int portableTankSlot, int amount, int internalTankId) {
         InternalFluidTank tank = this.getContents(menu.getBlock(), internalTankId);
         ItemStack tankItem = menu.getItemInSlot(portableTankSlot);
 

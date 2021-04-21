@@ -1,6 +1,5 @@
 package io.github.seggan.liquid.machinery;
 
-import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.LiquidAddon;
 import io.github.seggan.liquid.items.fluids.FluidTankTextures;
@@ -63,7 +62,7 @@ public class Melter extends FluidHoldingContainer implements EnergyNetComponent 
     );
 
     public static final RecipeType RECIPE_TYPE = new RecipeType(
-        new NamespacedKey(LiquidAddon.getInstance(), "melter"),
+        new NamespacedKey(LiquidAddon.inst(), "melter"),
         Items.MELTER
     );
 
@@ -129,7 +128,7 @@ public class Melter extends FluidHoldingContainer implements EnergyNetComponent 
     protected void tick(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Config data) {
         if (!Boolean.parseBoolean(data.getString("enabled"))) return;
 
-        if (this.transferToTank(menu, TANK_SLOT, PluginUtils.getConfigInt("liquid-transfer-rate", 1, Integer.MAX_VALUE), 0)) {
+        if (this.transferToPortableTank(menu, TANK_SLOT, LiquidAddon.inst().getConfig().getInt("liquid-transfer-rate", 1, Integer.MAX_VALUE), 0)) {
             this.updateLore(menu, CONTENTS, 0);
         } else {
             ItemStack ti = menu.getItemInSlot(TANK_SLOT);

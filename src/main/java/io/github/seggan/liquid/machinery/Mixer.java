@@ -68,7 +68,7 @@ public class Mixer extends FluidHoldingContainer implements EnergyNetComponent {
     );
 
     public static final RecipeType RECIPE_TYPE = new RecipeType(
-        new NamespacedKey(LiquidAddon.getInstance(), "mixer"),
+        new NamespacedKey(LiquidAddon.inst(), "mixer"),
         Items.MIXER
     );
 
@@ -164,6 +164,11 @@ public class Mixer extends FluidHoldingContainer implements EnergyNetComponent {
                 break;
             }
         }
+
+        int rate = LiquidAddon.inst().getConfig().getInt("liquid-transfer-rate", 1, Integer.MAX_VALUE);
+        this.transferToPortableTank(menu, TANK_0_CONTENTS, -rate, 0);
+        this.transferToPortableTank(menu, TANK_1_CONTENTS, -rate, 1);
+        this.transferToPortableTank(menu, TANK_2_CONTENTS, -rate, 2);
     }
 
     @Nonnull

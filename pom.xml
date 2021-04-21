@@ -112,10 +112,25 @@
         </dependency>
 
         <dependency>
-            <groupId>io.github.mooy1</groupId>
+            <groupId>com.github.mooy1</groupId>
             <artifactId>InfinityLib</artifactId>
-            <version>857df4a9df</version>
+            <version>6092ae7470</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- testing deps -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.6.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.seeseemelk</groupId>
+            <artifactId>MockBukkit-v1.16</artifactId>
+            <version>0.34.1</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

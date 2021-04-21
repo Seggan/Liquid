@@ -8,9 +8,11 @@ import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -43,7 +45,7 @@ public final class MixerRecipe {
 
     @ParametersAreNonnullByDefault
     public boolean matchesAndConsume(InternalFluidTank tankOne, InternalFluidTank tankTwo, InternalFluidTank tankThree, InternalFluidTank outputTank) {
-        Set<InternalFluidTank> tanks = new HashSet<>(Arrays.asList(tankOne, tankTwo, tankThree));
+        List<InternalFluidTank> tanks = new ArrayList<>(Arrays.asList(tankOne, tankTwo, tankThree));
 
         Map<Pair<Liquid, Integer>, InternalFluidTank> found = new HashMap<>();
         for (Pair<Liquid, Integer> liquid : this.cache) {

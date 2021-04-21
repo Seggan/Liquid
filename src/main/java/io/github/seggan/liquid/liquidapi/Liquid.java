@@ -1,10 +1,14 @@
 package io.github.seggan.liquid.liquidapi;
 
 import io.github.seggan.liquid.VanillaItems;
+import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import lombok.Getter;
+import lombok.ToString;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.chat.ChatColors;
 import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import org.bukkit.Material;
@@ -16,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
+@ToString
 public class Liquid {
 
     private static final Map<String, Liquid> ids = new HashMap<>();
@@ -85,20 +90,23 @@ public class Liquid {
         this.solid = solid;
         this.name = ChatColors.color(name);
 
-        SlimefunItem sfi = SlimefunItem.getByItem(solid);
-        if (sfi != null) {
+        SlimefunItem sfi;
+        if (this.solid instanceof SlimefunItemStack) {
+            this.slimefunItem = true;
+            this.id = ((SlimefunItemStack) this.solid).getItemId();
+        } else if ((sfi = SlimefunItem.getByItem(this.solid)) != null) {
             this.slimefunItem = true;
             this.id = sfi.getId();
         } else {
             this.slimefunItem = false;
-            this.id = solid.getType().name();
+            this.id = this.solid.getType().name();
         }
 
         ids.put(this.id, this);
     }
 
     public Liquid(ItemStack solid) {
-        this(solid, "&6Molten " + ItemUtils.getItemName(solid));
+        this(solid, "&6Molten " + (SlimefunPlugin.getMinecraftVersion() == MinecraftVersion.UNIT_TEST ? solid.getItemMeta().getDisplayName() : ItemUtils.getItemName(solid)));
     }
 
     @Nonnull

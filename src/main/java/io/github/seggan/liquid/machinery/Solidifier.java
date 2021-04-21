@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 public class Solidifier extends AContainer implements RecipeDisplayItem {
 
     public static final RecipeType RECIPE_TYPE = new RecipeType(
-        new NamespacedKey(LiquidAddon.getInstance(), "solidifier"),
+        new NamespacedKey(LiquidAddon.inst(), "solidifier"),
         Items.SOLIDIFIER
     );
 
