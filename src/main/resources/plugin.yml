@@ -3,7 +3,7 @@ author: Seggan
 main: io.github.seggan.liquid.LiquidAddon
 depend: [Slimefun]
 version: ${project.version}
-api-version: 1.14
+api-version: 1.16
 commands:
   liquid:
     description: Base Liquid command

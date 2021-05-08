@@ -8,8 +8,8 @@ import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.Unplaceabl
 import lombok.Getter;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.chat.ChatColors;
 import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
+import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -18,7 +18,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -41,17 +41,11 @@ public class PortableFluidTank extends UnplaceableBlock {
             FluidTankTextures.EMPTY.getTexture(),
             "&6Portable Fluid Tank",
             "",
-            "&7Capacity: " + capacity,
             "&7Contents: None",
-            "&7Amount: 0"
+            "&7Amount: 0/" + capacity
         ), RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
 
         this.capacity = capacity;
-    }
-
-    private static void updateLore(@Nonnull List<String> lore, @Nonnull Liquid liquid, int amount) {
-        lore.set(2, ChatColors.color("&7Contents: " + liquid.getName()));
-        lore.set(3, ChatColors.color("&7Amount: " + amount));
     }
 
     @Nonnull
@@ -78,9 +72,11 @@ public class PortableFluidTank extends UnplaceableBlock {
         int finalAmount = Math.min(Math.max(0, amount), this.capacity);
         container.set(AMOUNT_KEY, PersistentDataType.INTEGER, finalAmount);
 
-        List<String> lore = meta.getLore();
-        updateLore(lore, liquid, finalAmount);
-        meta.setLore(lore);
+        meta.setLore(Arrays.asList(
+            "",
+            ChatColor.GRAY + "Contents: " + container.getOrDefault(LIQUID_KEY, PersistentLiquid.TYPE, Liquid.NONE).getName(),
+            ChatColor.GRAY + "Amount: " + finalAmount + "/" + this.capacity
+        ));
 
         FluidTankTextures.getTexture(finalAmount, this.capacity).inject((SkullMeta) meta);
     }

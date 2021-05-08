@@ -16,9 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public abstract class FluidHoldingContainer extends TickingContainer {
 
@@ -55,15 +53,14 @@ public abstract class FluidHoldingContainer extends TickingContainer {
 
     protected final void updateLore(@Nonnull BlockMenu menu, int slot, int tankId) {
         InternalFluidTank contents = this.getContents(menu.getBlock(), tankId);
-        List<String> newLore = new ArrayList<>(Arrays.asList(
-            "",
-            ChatColors.color("&7Contents: " + contents.getLiquid().getName()),
-            ChatColors.color("&7Amount: " + contents.getAmount())
-        ));
 
         ItemStack stack = menu.getItemInSlot(slot);
         ItemMeta meta = stack.getItemMeta();
-        meta.setLore(newLore);
+        meta.setLore(Arrays.asList(
+            "",
+            ChatColors.color("&7Contents: " + contents.getLiquid().getName()),
+            ChatColors.color("&7Amount: " + contents.getAmount() + "/" + this.getLiquidCapacity(tankId))
+        ));
         stack.setItemMeta(meta);
     }
 

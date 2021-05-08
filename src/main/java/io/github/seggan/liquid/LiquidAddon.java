@@ -7,6 +7,7 @@ import io.github.mooy1.infinitylib.commands.AbstractCommand;
 import io.github.seggan.liquid.categories.MixerCategory;
 import io.github.seggan.liquid.items.fluids.PortableFluidTank;
 import io.github.seggan.liquid.machinery.Melter;
+import io.github.seggan.liquid.machinery.Mixer;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -24,13 +25,11 @@ public final class LiquidAddon extends AbstractAddon implements SlimefunAddon {
 
     private static LiquidAddon instance = null;
 
-    public LiquidAddon()
-    {
+    public LiquidAddon() {
         super();
     }
 
-    protected LiquidAddon(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file)
-    {
+    protected LiquidAddon(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
         super(loader, description, dataFolder, file);
     }
 
@@ -62,11 +61,11 @@ public final class LiquidAddon extends AbstractAddon implements SlimefunAddon {
 //            SlimefunItems.REINFORCED_PLATE, SlimefunItems.REINFORCED_PLATE, SlimefunItems.REINFORCED_PLATE
 //        }).register(this);
 //
-//        new Mixer(Items.category, Items.MIXER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-//            SlimefunItems.CARBONADO, SlimefunItems.HEATING_COIL, SlimefunItems.CARBONADO,
-//            SlimefunItems.HEATING_COIL, Items.MELTER, SlimefunItems.HEATING_COIL,
-//            SlimefunItems.CARBONADO, SlimefunItems.HEATING_COIL, SlimefunItems.CARBONADO
-//        }).register(this);
+        new Mixer(Items.category, Items.MIXER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+            SlimefunItems.CARBONADO, SlimefunItems.HEATING_COIL, SlimefunItems.CARBONADO,
+            SlimefunItems.HEATING_COIL, Items.MELTER, SlimefunItems.HEATING_COIL,
+            SlimefunItems.CARBONADO, SlimefunItems.HEATING_COIL, SlimefunItems.CARBONADO
+        }).register(this);
 //
 //        new Centrifuge(Items.category, Items.CENTRIFUGE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
 //            SlimefunItems.REINFORCED_ALLOY_INGOT, new ItemStack(Material.BOWL), SlimefunItems.REINFORCED_ALLOY_INGOT,

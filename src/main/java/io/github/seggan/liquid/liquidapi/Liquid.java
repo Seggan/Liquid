@@ -81,6 +81,9 @@ public class Liquid {
     public static final Liquid REDSTONE_ALLOY = new Liquid(SlimefunItems.REDSTONE_ALLOY);
     public static final Liquid SULFATE = new Liquid(SlimefunItems.SULFATE);
 
+    public static final Liquid REDSTONE = new Liquid(VanillaItems.REDSTONE);
+    public static final Liquid LAPIS = new Liquid(VanillaItems.LAPIS);
+
     private final ItemStack solid;
     private final String name;
     private final String id;
@@ -141,5 +144,9 @@ public class Liquid {
         if (!(obj instanceof Liquid)) return false;
 
         return this.id.equals(((Liquid) obj).id);
+    }
+
+    public boolean isNone() {
+        return this.id.equals(Liquid.NONE.getId());
     }
 }

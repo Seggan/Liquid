@@ -74,12 +74,33 @@ public class Mixer extends FluidHoldingContainer implements EnergyNetComponent {
 
     private static final Set<MixerRecipe> recipes = new HashSet<>();
 
+    static {
+        addRecipe(MixerRecipe.createRecipe(Liquid.ALUMINUM, Liquid.BRASS, Liquid.ALUMINUM_BRASS));
+        addRecipe(MixerRecipe.createRecipe(Liquid.ALUMINUM, Liquid.BRONZE, Liquid.ALUMINUM_BRONZE));
+        addRecipe(MixerRecipe.createRecipe(Liquid.ALUMINUM, Liquid.COPPER, Liquid.DURALUMIN));
+        addRecipe(MixerRecipe.createRecipe(Liquid.IRON, Liquid.GOLD_24, Liquid.GILDED_IRON));
+        addRecipe(MixerRecipe.createRecipe(Liquid.IRON, Liquid.CARBON, Liquid.STEEL));
+        addRecipe(MixerRecipe.createRecipe(Liquid.STEEL, 1, Liquid.CARBON, 2, Liquid.NONE, 0, Liquid.DAMASCUS_STEEL, 3));
+        addRecipe(MixerRecipe.createRecipe(Liquid.IRON, Liquid.SILICON, Liquid.FERROSILICON));
+        addRecipe(MixerRecipe.createRecipe(Liquid.IRON, Liquid.COPPER, Liquid.NICKEL));
+        addRecipe(MixerRecipe.createRecipe(Liquid.NICKEL, Liquid.COPPER, Liquid.COBALT));
+        addRecipe(MixerRecipe.createRecipe(Liquid.COPPER, Liquid.TIN, Liquid.BRONZE));
+        addRecipe(MixerRecipe.createRecipe(Liquid.COPPER, Liquid.ZINC, Liquid.BRASS));
+        addRecipe(MixerRecipe.createRecipe(Liquid.BRONZE, Liquid.GOLD_24, Liquid.CORINTHIAN_BRONZE));
+        addRecipe(MixerRecipe.createRecipe(Liquid.LEAD, Liquid.TIN, Liquid.SOLDER));
+        addRecipe(MixerRecipe.createRecipe(Liquid.COPPER, Liquid.SILVER, Liquid.BILLION));
+        addRecipe(MixerRecipe.createRecipe(Liquid.ALUMINUM, 3, Liquid.COPPER, 3, Liquid.STEEL, 3, Liquid.HARDENED_METAL, 4));
+        addRecipe(MixerRecipe.createRecipe(Liquid.HARDENED_METAL, 1, Liquid.CARBON, 8, Liquid.GOLD_24, 3, Liquid.REINFORCED_ALLOY, 3));
+        addRecipe(MixerRecipe.createRecipe(Liquid.URANIUM, Liquid.PLUTONIUM, Liquid.BOOSTED_URANIUM));
+        addRecipe(MixerRecipe.createRecipe(Liquid.HARDENED_METAL, Liquid.REDSTONE, Liquid.FERROSILICON, Liquid.REDSTONE_ALLOY));
+    }
+
     public Mixer(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
     }
 
-    public static void addRecipe(Liquid onel, int onea, Liquid twol, int twoa, Liquid threel, int threea, Liquid outl, int outa) {
-        recipes.add(MixerRecipe.createRecipe(onel, onea, twol, twoa, threel, threea, outl, outa));
+    public static void addRecipe(MixerRecipe recipe) {
+        recipes.add(recipe);
     }
 
     @Override
@@ -157,18 +178,20 @@ public class Mixer extends FluidHoldingContainer implements EnergyNetComponent {
         for (MixerRecipe recipe : recipes) {
             if (recipe.matchesAndConsume(t1, t2, t3, out)) {
                 this.setContents(b, t1, t2, t3, out);
-                this.updateLore(menu, TANK_0_CONTENTS, t1.getId());
-                this.updateLore(menu, TANK_1_CONTENTS, t2.getId());
-                this.updateLore(menu, TANK_2_CONTENTS, t3.getId());
-                this.updateLore(menu, OUTPUT_TANK_CONTENTS, out.getId());
                 break;
             }
         }
 
         int rate = LiquidAddon.inst().getConfig().getInt("liquid-transfer-rate", 1, Integer.MAX_VALUE);
-        this.transferToPortableTank(menu, TANK_0_CONTENTS, -rate, 0);
-        this.transferToPortableTank(menu, TANK_1_CONTENTS, -rate, 1);
-        this.transferToPortableTank(menu, TANK_2_CONTENTS, -rate, 2);
+        this.transferToPortableTank(menu, TANK_0_INPUT, -rate, 0);
+        this.transferToPortableTank(menu, TANK_1_INPUT, -rate, 1);
+        this.transferToPortableTank(menu, TANK_2_INPUT, -rate, 2);
+        this.transferToPortableTank(menu, OUTPUT_TANK_INPUT, rate, 3);
+
+        this.updateLore(menu, TANK_0_CONTENTS, t1.getId());
+        this.updateLore(menu, TANK_1_CONTENTS, t2.getId());
+        this.updateLore(menu, TANK_2_CONTENTS, t3.getId());
+        this.updateLore(menu, OUTPUT_TANK_CONTENTS, out.getId());
     }
 
     @Nonnull

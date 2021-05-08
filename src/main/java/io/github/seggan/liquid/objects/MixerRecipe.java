@@ -37,10 +37,43 @@ public final class MixerRecipe {
         this.cache.addAll(Arrays.asList(this.one, this.two, this.three));
     }
 
+    /**
+     * Creates a new {@code MixerRecipe}
+     */
     @Nonnull
     @ParametersAreNonnullByDefault
     public static MixerRecipe createRecipe(Liquid onel, int onea, Liquid twol, int twoa, Liquid threel, int threea, Liquid outl, int outa) {
         return new MixerRecipe(new Pair<>(onel, onea), new Pair<>(twol, twoa), new Pair<>(threel, threea), new Pair<>(outl, outa));
+    }
+
+    /**
+     * Creates a new {@code MixerRecipe} with all liquid amounts 1
+     */
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public static MixerRecipe createRecipe(Liquid onel, Liquid twol, Liquid threel, Liquid outl) {
+        int nonNone = 3;
+        if (onel.isNone()) nonNone--;
+        if (twol.isNone()) nonNone--;
+        if (threel.isNone()) nonNone--;
+
+        return new MixerRecipe(getPair(onel), getPair(twol), getPair(threel), new Pair<>(outl, nonNone));
+    }
+
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public static MixerRecipe createRecipe(Liquid onel, int onea, Liquid twol, int twoa, Liquid outl, int outa) {
+        return new MixerRecipe(new Pair<>(onel, onea), new Pair<>(twol, twoa), new Pair<>(Liquid.NONE, 0), new Pair<>(outl, outa));
+    }
+
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public static MixerRecipe createRecipe(Liquid onel, Liquid twol, Liquid outl) {
+        return createRecipe(onel, twol, Liquid.NONE, outl);
+    }
+
+    private static Pair<Liquid, Integer> getPair(Liquid l) {
+        return new Pair<>(l, l.isNone() ? 0 : 1);
     }
 
     @ParametersAreNonnullByDefault
