@@ -32,6 +32,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -257,6 +258,7 @@ public abstract class LContainer extends SlimefunItem implements EnergyNetCompon
         return OUTPUT_SLOTS[getInventoryType()];
     }
 
+    @Nonnull
     @Override
     public EnergyNetComponentType getEnergyComponentType() {
         return EnergyNetComponentType.CONSUMER;
@@ -343,7 +345,7 @@ public abstract class LContainer extends SlimefunItem implements EnergyNetCompon
             ItemStack item = inv.getItemInSlot(slot);
 
             if (item != null) {
-                inventory.put(slot, new ItemStackWrapper(item));
+                inventory.put(slot, ItemStackWrapper.wrap(item));
             }
         }
 
