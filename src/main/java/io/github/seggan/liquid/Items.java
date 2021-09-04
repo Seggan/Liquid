@@ -1,9 +1,9 @@
 package io.github.seggan.liquid;
 
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
@@ -11,9 +11,9 @@ public final class Items {
 
     private Items() {}
 
-    public static final Category category = new Category(
+    public static final ItemGroup CATEGORY = new ItemGroup(
         new NamespacedKey(Liquid.getInstance(), "liquids"),
-        new CustomItem(Material.LAVA_BUCKET, "&6Liquids")
+        new CustomItemStack(Material.LAVA_BUCKET, "&6Liquids")
     );
 
     public static final SlimefunItemStack MELTER = new SlimefunItemStack(

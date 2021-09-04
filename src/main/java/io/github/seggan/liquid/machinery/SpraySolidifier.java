@@ -2,17 +2,19 @@ package io.github.seggan.liquid.machinery;
 
 import com.google.common.collect.BiMap;
 import io.github.seggan.liquid.objects.LiquidMetal;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class SpraySolidifier extends AContainer {
 
-    public SpraySolidifier(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public SpraySolidifier(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
     }
 
@@ -45,6 +47,7 @@ public class SpraySolidifier extends AContainer {
         return 1;
     }
 
+    @Nonnull
     @Override
     public String getMachineIdentifier() {
         return "SPRAY_SOLIDIFIER";

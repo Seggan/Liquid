@@ -2,26 +2,26 @@ package io.github.seggan.liquid.machinery;
 
 import com.google.common.collect.BiMap;
 import io.github.seggan.liquid.Items;
-import io.github.seggan.liquid.objects.LiquidMetal;
 import io.github.seggan.liquid.VanillaItems;
 import io.github.seggan.liquid.objects.LContainer;
+import io.github.seggan.liquid.objects.LiquidMetal;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 public class Centrifuge extends LContainer implements RecipeDisplayItem {
 
-    public Centrifuge(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public Centrifuge(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
     }
 
@@ -211,7 +211,7 @@ public class Centrifuge extends LContainer implements RecipeDisplayItem {
         List<ItemStack> displayRecipes = new ArrayList<>(recipes.size() * 2);
 
         for (MachineRecipe recipe : recipes) {
-            displayRecipes.add(new CustomItem(
+            displayRecipes.add(new CustomItemStack(
                 recipe.getInput()[0], recipe.getInput()[0].getItemMeta().getDisplayName() + " and buckets (amounts vary)")); // Can't exactly show all 9 items at once
             displayRecipes.add(recipe.getOutput()[0]); // Main output should be the first item
         }

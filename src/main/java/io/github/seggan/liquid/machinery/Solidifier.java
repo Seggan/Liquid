@@ -4,14 +4,16 @@ import com.google.common.collect.BiMap;
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.Liquid;
 import io.github.seggan.liquid.objects.LiquidMetal;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+
+import javax.annotation.Nonnull;
 
 public class Solidifier extends AContainer implements RecipeDisplayItem {
 
@@ -20,7 +22,7 @@ public class Solidifier extends AContainer implements RecipeDisplayItem {
         Items.SOLIDIFIER
     );
 
-    public Solidifier(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public Solidifier(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
     }
 
@@ -57,6 +59,7 @@ public class Solidifier extends AContainer implements RecipeDisplayItem {
         return 1;
     }
 
+    @Nonnull
     @Override
     public String getMachineIdentifier() {
         return "SOLIDIFIER";

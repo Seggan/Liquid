@@ -1,19 +1,17 @@
 package io.github.seggan.liquid.objects;
 
-import java.util.logging.Level;
-
-import javax.annotation.Nonnull;
-
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.core.attributes.ItemAttribute;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.blocks.BlockPosition;
+import io.github.thebusybiscuit.slimefun4.utils.NumberUtils;
+import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-import io.github.thebusybiscuit.slimefun4.core.attributes.ItemAttribute;
-import io.github.thebusybiscuit.slimefun4.utils.NumberUtils;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
+import java.util.logging.Level;
+import javax.annotation.Nonnull;
 
 public interface FluidHolder extends ItemAttribute {
 
@@ -133,7 +131,7 @@ public interface FluidHolder extends ItemAttribute {
         String fluidStored = data.getString("fluid-stored");
 
         if (fluidStored != null) {
-            return (Fluid) SlimefunItem.getByID(fluidStored);
+            return (Fluid) SlimefunItem.getById(fluidStored);
         } else {
             return null;
         }
@@ -148,7 +146,7 @@ public interface FluidHolder extends ItemAttribute {
             if (isFluidHolder()) {
 
                 if (fluidStored != getFluid(l)) {
-                    BlockStorage.addBlockInfo(l, "fluid-stored", String.valueOf(fluidStored.getId()), false);
+                    BlockStorage.addBlockInfo(l, "fluid-stored", fluidStored.getId(), false);
 
                 }
             }

@@ -1,7 +1,18 @@
 package io.github.seggan.liquid.categories;
 
-import java.util.List;
-
+import io.github.seggan.liquid.Items;
+import io.github.seggan.liquid.Liquid;
+import io.github.seggan.liquid.machinery.Mixer;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.groups.FlexItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
+import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
+import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -9,21 +20,10 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.seggan.liquid.Items;
-import io.github.seggan.liquid.Liquid;
-import io.github.seggan.liquid.machinery.Mixer;
-import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
-import io.github.thebusybiscuit.slimefun4.core.categories.FlexCategory;
-import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
-import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
-import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
+import java.util.List;
+import javax.annotation.ParametersAreNonnullByDefault;
 
-public class MixerCategory extends FlexCategory {
+public class MixerCategory extends FlexItemGroup {
 
     public static final MixerCategory INSTANCE = new MixerCategory();
 
@@ -31,10 +31,11 @@ public class MixerCategory extends FlexCategory {
 
     public MixerCategory() {
         super(new NamespacedKey(Liquid.getInstance(), "Mixer_recipes_category"),
-            new CustomItem(Items.MIXER.getType(), "&6Mixer Recipes"));
+            new CustomItemStack(Items.MIXER.getType(), "&6Mixer Recipes"));
     }
 
     @Override
+    @ParametersAreNonnullByDefault
     public boolean isVisible(Player player, PlayerProfile playerProfile, SlimefunGuideMode mode) {
         return mode != SlimefunGuideMode.CHEAT_MODE;
     }
@@ -52,12 +53,12 @@ public class MixerCategory extends FlexCategory {
 
         menu.setEmptySlotsClickable(false);
 
-        menu.addItem(1, new CustomItem(ChestMenuUtils.getBackButton(player, "",
-            ChatColor.GRAY + SlimefunPlugin.getLocalization().getMessage(player, "guide.back.guide")))
+        menu.addItem(1, new CustomItemStack(ChestMenuUtils.getBackButton(player, "",
+            ChatColor.GRAY + Slimefun.getLocalization().getMessage(player, "guide.back.guide")))
         );
 
         menu.addMenuClickHandler(1, (pl, slot, item, action) -> {
-            SlimefunPlugin.getRegistry().getSlimefunGuide(mode).openMainMenu(playerProfile, 1);
+            Slimefun.getRegistry().getSlimefunGuide(mode).openMainMenu(playerProfile, 1);
             return false;
         });
 
@@ -84,8 +85,8 @@ public class MixerCategory extends FlexCategory {
             menu.addItem(i, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
         }
 
-        menu.addItem(1, new CustomItem(ChestMenuUtils.getBackButton(player, "",
-            ChatColor.GRAY + SlimefunPlugin.getLocalization().getMessage(player, "guide.back.guide")))
+        menu.addItem(1, new CustomItemStack(ChestMenuUtils.getBackButton(player, "",
+            ChatColor.GRAY + Slimefun.getLocalization().getMessage(player, "guide.back.guide")))
         );
         menu.addMenuClickHandler(1, (pl, s, is, action) -> {
             open(player, p, SlimefunGuideMode.SURVIVAL_MODE);

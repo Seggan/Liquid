@@ -4,15 +4,17 @@ import com.google.common.collect.BiMap;
 import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.Liquid;
 import io.github.seggan.liquid.objects.LiquidMetal;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+
+import javax.annotation.Nonnull;
 
 public class Melter extends AContainer implements RecipeDisplayItem {
 
@@ -21,7 +23,7 @@ public class Melter extends AContainer implements RecipeDisplayItem {
         Items.MELTER
     );
 
-    public Melter(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public Melter(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
     }
 
@@ -70,7 +72,7 @@ public class Melter extends AContainer implements RecipeDisplayItem {
             );
         }
         BiMap<SlimefunItemStack, ItemStack> dusts = LiquidMetal.getLiquidDusts();
-        for (ItemStack dust : dusts.keySet()) {
+        for (SlimefunItemStack dust : dusts.keySet()) {
             registerRecipe(
                 3,
                 new ItemStack[]{dust, new ItemStack(Material.BUCKET)},
@@ -94,6 +96,7 @@ public class Melter extends AContainer implements RecipeDisplayItem {
         return 1;
     }
 
+    @Nonnull
     @Override
     public String getMachineIdentifier() {
         return "MELTER";

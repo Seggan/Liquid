@@ -1,29 +1,29 @@
 package io.github.seggan.liquid.objects;
 
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
-import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -32,12 +32,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * An abstract container based off of {@link AContainer}
@@ -49,20 +49,20 @@ import java.util.Map;
 public abstract class LContainer extends SlimefunItem implements EnergyNetComponent {
 
     private static final int[][] BORDER = {
-        new int[] {4, 13, 22, 31, 40},
-        new int[] {0, 1, 2, 3, 4, 13, 22, 31, 36, 37, 38, 39, 40}};
+        new int[]{4, 13, 22, 31, 40},
+        new int[]{0, 1, 2, 3, 4, 13, 22, 31, 36, 37, 38, 39, 40}};
     private static final int[][] INPUT_BORDER = {
-        new int[] {0, 1, 2, 3, 12, 21, 30, 36, 37, 38, 39},
-        new int[] {9, 10, 11, 12, 18, 21, 27, 28, 29, 30}};
+        new int[]{0, 1, 2, 3, 12, 21, 30, 36, 37, 38, 39},
+        new int[]{9, 10, 11, 12, 18, 21, 27, 28, 29, 30}};
     private static final int[][] OUTPUT_BORDER = {
-        new int[] {5, 6, 7, 8, 14, 23, 32, 41, 42, 43, 44},
-        new int[] {5, 6, 7, 8, 14, 23, 32, 41, 42, 43, 44}};
+        new int[]{5, 6, 7, 8, 14, 23, 32, 41, 42, 43, 44},
+        new int[]{5, 6, 7, 8, 14, 23, 32, 41, 42, 43, 44}};
     private static final int[][] INPUT_SLOTS = {
-        new int[] {9, 10, 11, 18, 19, 20, 27, 28, 29},
-        new int[] {19, 20}};
+        new int[]{9, 10, 11, 18, 19, 20, 27, 28, 29},
+        new int[]{19, 20}};
     private static final int[][] OUTPUT_SLOTS = {
-        new int[] {15, 16, 17, 24, 25, 26, 33, 34, 35},
-        new int[] {15, 16, 17, 24, 25, 26, 33, 34, 35}};
+        new int[]{15, 16, 17, 24, 25, 26, 33, 34, 35},
+        new int[]{15, 16, 17, 24, 25, 26, 33, 34, 35}};
 
     public static Map<Block, MachineRecipe> processing = new HashMap<>();
     public static Map<Block, Integer> progress = new HashMap<>();
@@ -70,7 +70,7 @@ public abstract class LContainer extends SlimefunItem implements EnergyNetCompon
     protected final List<MachineRecipe> recipes = new ArrayList<>();
 
     @ParametersAreNonnullByDefault
-    public LContainer(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public LContainer(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
 
         new BlockMenuPreset(getMachineIdentifier(), getInventoryTitle()) {
@@ -88,8 +88,8 @@ public abstract class LContainer extends SlimefunItem implements EnergyNetCompon
             @Override
             public boolean canOpen(Block b, Player p) {
                 return (p.hasPermission("slimefun.inventory.bypass")
-                    || SlimefunPlugin.getProtectionManager().hasPermission(
-                    p, b.getLocation(), ProtectableAction.INTERACT_BLOCK));
+                    || Slimefun.getProtectionManager().hasPermission(
+                    p, b.getLocation(), Interaction.INTERACT_BLOCK));
             }
 
             @Override
@@ -127,7 +127,7 @@ public abstract class LContainer extends SlimefunItem implements EnergyNetCompon
     }
 
     @ParametersAreNonnullByDefault
-    public LContainer(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+    public LContainer(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
                       ItemStack recipeOutput) {
         this(category, item, recipeType, recipe);
         this.recipeOutput = recipeOutput;
@@ -146,7 +146,7 @@ public abstract class LContainer extends SlimefunItem implements EnergyNetCompon
             preset.addItem(i, ChestMenuUtils.getOutputSlotTexture(), ChestMenuUtils.getEmptyClickHandler());
         }
 
-        preset.addItem(22, new CustomItem(Material.BLACK_STAINED_GLASS_PANE, " "),
+        preset.addItem(22, new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, " "),
             ChestMenuUtils.getEmptyClickHandler());
 
         for (int i : getOutputSlots()) {
@@ -282,7 +282,7 @@ public abstract class LContainer extends SlimefunItem implements EnergyNetCompon
     }
 
     public void registerRecipe(int seconds, ItemStack input, ItemStack output) {
-        registerRecipe(new MachineRecipe(seconds, new ItemStack[] {input}, new ItemStack[] {output}));
+        registerRecipe(new MachineRecipe(seconds, new ItemStack[]{input}, new ItemStack[]{output}));
     }
 
     @Override
@@ -319,7 +319,7 @@ public abstract class LContainer extends SlimefunItem implements EnergyNetCompon
                 }
                 progress.put(b, timeleft - 1);
             } else {
-                inv.replaceExistingItem(22, new CustomItem(Material.BLACK_STAINED_GLASS_PANE, " "));
+                inv.replaceExistingItem(22, new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, " "));
 
                 for (ItemStack output : processing.get(b).getOutput()) {
                     inv.pushItem(output.clone(), getOutputSlots());

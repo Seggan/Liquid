@@ -6,10 +6,10 @@ import io.github.seggan.liquid.Items;
 import io.github.seggan.liquid.VanillaItems;
 import io.github.seggan.liquid.machinery.Melter;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -102,7 +102,7 @@ public class LiquidMetal extends SlimefunItem {
     }
 
     public LiquidMetal(SlimefunItemStack item, ItemStack solid) {
-        super(Items.category, item, Melter.RECIPE_TYPE, new ItemStack[]{
+        super(Items.CATEGORY, item, Melter.RECIPE_TYPE, new ItemStack[]{
             solid, new ItemStack(Material.BUCKET), null,
             null, null, null,
             null, null, null
