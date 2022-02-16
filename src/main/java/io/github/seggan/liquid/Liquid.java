@@ -32,6 +32,8 @@ public class Liquid extends JavaPlugin implements SlimefunAddon {
     public void onEnable() {
         instance = this;
 
+        saveDefaultConfig();
+
         if (getConfig().getBoolean("options.auto-update", true) && getDescription().getVersion().startsWith("DEV - ")) {
             new GitHubBuildsUpdater(this, getFile(), "Seggan/Liquid/master").start();
         }
